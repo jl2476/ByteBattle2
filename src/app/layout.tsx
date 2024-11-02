@@ -7,7 +7,7 @@ export const metadata = {
   description: 'Your website description here',
 };
 
-export default function RootLayout() {
+export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>

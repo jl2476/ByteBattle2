@@ -1,0 +1,7 @@
+.puzzles {
+    width: 234px;
+    height: 402px;
+    border: 1px solid black; /* This should work to display the border */
+    box-sizing: border-box; /* Ensures padding and borders are included in width/height */
+    
+}
