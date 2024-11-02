@@ -1,4 +1,3 @@
-//import { firestore } from '@/firebase'
 import {
   getFirestore,
   doc,
@@ -33,7 +32,7 @@ function SignUp() {
       // Redirect or show success message
     } catch (error) {
       console.error('Registration error:', error);
-
+ 
       if (error instanceof Error) {
         setErrorMessage(error.message);
       } else {
