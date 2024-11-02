@@ -112,7 +112,7 @@ const languageMapping = {
 function EditorBody({ storeAt, index }) {
   
   const classes = useStyles();
-  const [codeFontSize, setCodeFontSize] = useState(14);
+  const [codeFontSize, setCodeFontSize] = useState(16);
   
   const [showLoader, setShowLoader] = useState(true);
   const [lang, setLang] = useState("");
@@ -126,6 +126,7 @@ function EditorBody({ storeAt, index }) {
   const notOwner = typeof window !== "undefined" &&
     localStorage.getItem("codex-codes") &&
     JSON.parse(localStorage.getItem("codex-codes"))[index]?.key === storeAt.split("/")[1];
+
 
   useEffect(() => {
     const db = getDatabase(app);
