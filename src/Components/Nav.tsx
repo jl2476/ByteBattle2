@@ -34,18 +34,57 @@ const Nav = () => {
             Puzzle
           </Link>
         </div>
-        <div className="container3">
+        <button className="container3">
           <img src="/profile.svg" alt="Profile" />
           Sign in/Register
-        </div>
+        </button>
       </div>
 
       {/* Conditional rendering based on active link */}
       <div className="">
         {activeLink === "/" ? (
           // Home Page Content
-          <div className="puzzles">
-            <p>Puzzles of the week</p>
+          <div className="bigPuzz">
+            <div className="puzzles">
+              <p className="PuzWeek">Puzzles of the week</p>
+              <div className="Prepuz">
+                <div className="puz">
+                  <img src="/puzzle.svg" alt="Puzzle" />
+                  <p>Sum it up</p>
+                  <p>Easy</p>
+                </div>
+                <div className="puz">
+                  <img src="/puzzle.svg" alt="Puzzle" />
+                  <p>Sum it up</p>
+                  <p>Easy</p>
+                </div>
+                <div className="puz">
+                  <img src="/puzzle.svg" alt="Puzzle" />
+                  <p>Sum it up</p>
+                  <p>Easy</p>
+                </div>
+                <div className="puz">
+                  <img src="/puzzle.svg" alt="Puzzle" />
+                  <p>Sum it up</p>
+                  <p>Easy</p>
+                </div>
+                <div className="puz">
+                  <img src="/puzzle.svg" alt="Puzzle" />
+                  <p>Sum it up</p>
+                  <p>Easy</p>
+                </div>
+                <div className="puz">
+                  <img src="/puzzle.svg" alt="Puzzle" />
+                  <p>Sum it up</p>
+                  <p>Easy</p>
+                </div>
+                <div className="puz">
+                  <img src="/puzzle.svg" alt="Puzzle" />
+                  <p>Sum it up</p>
+                  <p>Easy</p>
+                </div>
+              </div>
+            </div>
           </div>
         ) : (
           // Puzzle Page Content

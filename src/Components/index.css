@@ -65,10 +65,36 @@
     transform: scaleX(1); 
 }
 
+.bigPuzz{
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+}
+
 .puzzles {
     width: 234px;
     height: 402px;
     border: 1px solid black; /* This should work to display the border */
     box-sizing: border-box; /* Ensures padding and borders are included in width/height */
     border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 20px;
+}
+
+.puz{
+    display: flex;
+    justify-content: space-around;
+}
+
+.Prepuz{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.PuzWeek{
+    display: flex;
+    justify-content: center;
 }
