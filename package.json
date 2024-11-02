@@ -11,12 +11,21 @@
   "dependencies": {
     "@emotion/react": "^11.13.3",
     "@emotion/styled": "^11.13.0",
+    "@mui/icons-material": "^6.1.6",
     "@mui/material": "^6.1.6",
+    "@mui/styles": "^6.1.6",
+    "@types/react-router-dom": "^5.3.3",
+    "ace-builds": "^1.36.3",
+    "axios": "^1.7.7",
+    "express-ws": "^5.0.2",
     "firebase": "^11.0.1",
     "next": "15.0.2",
     "package.json": "^0.0.0",
+    "packages.json": "^0.0.1-security",
     "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "react-ace": "^13.0.0",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.27.0"
   },
   "devDependencies": {
     "@types/node": "^20",

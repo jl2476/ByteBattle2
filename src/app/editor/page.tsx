@@ -1,18 +1,20 @@
-import React from "react";
-import { useHistory } from "react-router-dom";
+"use client";
 
-import brandingLogo from "../../components/codexlogo.png";
+import React, { useEffect, useState } from "react";
+import { useRouter, useParams } from "next/navigation"; // Use Next.js router
+import brandingLogo from "../components/logo.png";
 import "./editor.css";
 
-import { makeStyles, createStyles, Theme } from "@material-ui/core";
-import { ThemeProvider } from "@material-ui/styles";
+import { makeStyles, createStyles } from "@mui/styles";
+import { ThemeProvider } from "@mui/material/styles";
 import { darkTheme } from "../components/MaterialTheming";
 
-import EditorBody from "./components/EditorBody";
+import EditorBody from "../components/editor-component";
 
-import firebase from "../components/firebase.js";
+import { getDatabase, ref, get, set } from "firebase/database";
+import { app } from "@/utils/firebase"; // Import Firebase app
 
-const useStyles = makeStyles((theme: Theme) =>
+const useStyles = makeStyles(() =>
   createStyles({
     editorPage: {
       height: "100%",
@@ -26,7 +28,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     header: {
       display: "grid",
-      gridTemplateColumns: "repeat(3,1fr)",
+      gridTemplateColumns: "repeat(3, 1fr)",
       "& > *": {
         margin: "auto 0",
       },
@@ -46,53 +48,62 @@ const useStyles = makeStyles((theme: Theme) =>
       display: "grid",
       gridTemplateRows: "70% 30%",
     },
-  }),
+  })
 );
 
-function Editor(props) {
+const Editor = () => {
   const classes = useStyles();
-  const history = useHistory();
-  const [className, setClassName] = React.useState(""),
-    [notOwner, setNotOwner] = React.useState(false);
+  const router = useRouter();
+  const { editorID, editorIndex } = useParams();
+  const [className, setClassName] = useState("");
+  const [notOwner, setNotOwner] = useState(false);
 
-  // let notOwner = true;
+  useEffect(() => {
+    const db = getDatabase(app);
+    const classRef = ref(db, `CodeX/${editorID}/className`);
 
-  // function setNotOwner(bool) {
-  //   notOwner = bool;
-  // }
+    // Fetch className from Firebase
+    get(classRef).then((snapshot) => {
+      if (snapshot.exists()) {
+        setClassName(snapshot.val());
+      } else {
+        console.warn("Class name not found in Firebase.");
+      }
+    }).catch((error) => {
+      console.error("Error fetching class name:", error);
+    });
 
-  React.useEffect(() => {
-    firebase
-      .database()
-      .ref("CodeX/" + props.match.params.editorID + "/className")
-      .once("value")
-      .then((snap) => {
-        setClassName(snap.val());
-      });
-    if (
-      localStorage.getItem("codex-codes") &&
-      JSON.parse(localStorage.getItem("codex-codes"))[
-        props.match.params.editorIndex
-      ].key === props.match.params.editorID
-    )
-      setNotOwner(true);
-  }, []);
-
-  React.useEffect(() => {
-    if (className.trim() !== "" && notOwner) {
-      firebase
-        .database()
-        .ref("CodeX/" + props.match.params.editorID + "/className")
-        .set(className);
-
-      console.log(localStorage.getItem("codex-codes"));
-      if (localStorage.getItem("codex-codes")) {
-        let classNames = JSON.parse(localStorage.getItem("codex-codes"));
-        classNames[props.match.params.editorIndex].name = className;
-        localStorage.setItem("codex-codes", JSON.stringify(classNames));
+    const storedCodes = localStorage.getItem("codex-codes");
+    if (storedCodes) {
+      const codesArray = JSON.parse(storedCodes);
+      if (Number.isInteger(Number(editorIndex)) && codesArray[editorIndex]?.key === editorID) {
+        setNotOwner(true);
       }
     }
-  }, [className]);
+  }, [editorID, editorIndex]);
+
+  useEffect(() => {
+    if (className.trim() && notOwner) {
+      const db = getDatabase(app);
+      const classRef = ref(db, `CodeX/${editorID}/className`);
+      set(classRef, className)
+        .then(() => {
+          console.log("Class name updated in Firebase.");
+        })
+        .catch((error) => {
+          console.error("Error updating class name:", error);
+        });
+
+      const storedCodes = localStorage.getItem("codex-codes");
+      if (storedCodes) {
+        const classNames = JSON.parse(storedCodes);
+        if (Number.isInteger(Number(editorIndex)) && classNames[editorIndex]) {
+          classNames[editorIndex].name = className;
+          localStorage.setItem("codex-codes", JSON.stringify(classNames));
+        }
+      }
+    }
+  }, [className, editorID, editorIndex, notOwner]);
 
   return (
     <ThemeProvider theme={darkTheme}>
@@ -100,26 +111,19 @@ function Editor(props) {
         <div className={classes.header}>
           <img
             className={classes.brandingLogo}
-            src={brandingLogo}
+            src={brandingLogo.src}
             alt="branding-logo"
-            onClick={() => {
-              history.push("/");
-            }}
+            onClick={() => router.push("/")} // use Next.js router to navigate
           />
           <input
             value={className}
-            onChange={(e) => {
-              setClassName(e.target.value);
-            }}
+            onChange={(e) => setClassName(e.target.value)}
             className={classes.codeTitle}
             spellCheck={false}
             readOnly={!notOwner}
           />
         </div>
-        <EditorBody
-          storeAt={"CodeX/" + props.match.params.editorID}
-          index={props.match.params.editorIndex}
-        />
+        <EditorBody storeAt={`CodeX/${editorID}`} index={editorIndex} />
       </div>
     </ThemeProvider>
   );
