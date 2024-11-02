@@ -1,7 +1,13 @@
+import './home.css';
+
 const Home = () => {
     return ( 
         <>
-        
+            <div className="">
+                <div className="puzzles">
+                    <p>Puzzles of the week</p>
+                </div>
+            </div>
         
         </>
      );

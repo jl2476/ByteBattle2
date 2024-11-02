@@ -2,11 +2,5 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-    background-image: url("/public/image.png");
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-}
 
 

@@ -8,7 +8,7 @@ import {
 } from "react-router-dom";
 import Layout from './Layout';
 import Home from './pages/home';
-import Puzzle from './pages/puzzle';
+import Puzzle from './Components/puzzle';
 
 const router = createBrowserRouter([
   {
