@@ -10,7 +10,7 @@
 
 .logo {
   margin-left: 60px;
-  color:white;
+  color: white;
 }
 
 .container2 {
@@ -92,18 +92,24 @@
   width: 100%;
   height: 100%;
   padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
 .puzzles {
-  width: 234px;
+  width: 300px;
   height: 402px;
-  border: 1px solid white; /* This should work to display the border */
+  background-color: #b09bfa7a; /* This should work to display the border */
   box-sizing: border-box; /* Ensures padding and borders are included in width/height */
   border-radius: 20px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   gap: 20px;
+  padding: 10px;
+  /* Add drop shadow */
+  box-shadow: 0 4.7px 4.7px 4px rgba(188, 169, 254, 0.5); /* BCA9FE with blur and spread */
 }
 
 .puz {
@@ -115,9 +121,60 @@
   display: flex;
   flex-direction: column;
   gap: 20px;
+  color: white;
 }
 
 .PuzWeek {
   display: flex;
   justify-content: center;
+  color: white;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropbtn {
+  color: white; /* White text */
+  padding: 10px; /* Some padding */
+  font-size: 16px; /* Font size */
+  border: none; /* No border */
+  cursor: pointer; /* Pointer cursor on hover */
+  border-radius: 5px; /* Rounded corners */
+  display: flex; /* Use flexbox for better alignment */
+  align-items: center; /* Center items vertically */
+  gap: 20px;
+  justify-content: center;
+}
+
+.arrow {
+  margin-left: 5px; /* Spacing between text and arrow */
+}
+
+.dropdown-content {
+  display: none; /* Hidden by default */
+  position: absolute; /* Position it below the button */
+  background-color: #f9f9f9; /* White background */
+  min-width: 160px; /* Minimum width */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Drop shadow */
+  z-index: 1; /* On top */
+  border-radius: 5px; /* Rounded corners */
+}
+
+.dropdown-content p {
+  color: black; /* Black text */
+  padding: 12px 16px; /* Padding inside the dropdown */
+  text-decoration: none; /* No underline */
+  display: block; /* Block display */
+}
+
+.dropdown:hover .dropdown-content {
+  display: block; /* Show the dropdown on hover */
+}
+
+.drop{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
 }

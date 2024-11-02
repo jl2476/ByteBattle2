@@ -13,9 +13,10 @@ const Nav = () => {
   };
 
   return (
-    <div className="nav-container"> {/* Wrap everything in a div for relative positioning */}
+    <div className="nav-container">
+      {" "}
+      {/* Wrap everything in a div for relative positioning */}
       <img src="/image.png" className="background-image" alt="Background" />
-      
       <div className="container1">
         <p className="logo">ByteBattle</p>
         <div className="container2">
@@ -41,7 +42,6 @@ const Nav = () => {
           Sign in/Register
         </button>
       </div>
-
       {/* Conditional rendering based on active link */}
       <div className="">
         {activeLink === "/" ? (
@@ -84,6 +84,73 @@ const Nav = () => {
                   <img src="/puzzle.svg" alt="Puzzle" />
                   <p>Sum it up</p>
                   <p>Easy</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="puzzles">
+              <p className="PuzWeek">FAQ</p>
+              <div className="drop">
+                {" "}
+                <div className="dropdown">
+                  <button className="dropbtn">
+                    What is this supposed to be?
+                    <span className="arrow">
+                      <img src="/arrow_down.svg"></img>
+                    </span>
+                  </button>
+                  <div className="dropdown-content">
+                    <p>This is a dropdown content!</p>
+                    <p>You can add more information here.</p>
+                  </div>
+                </div>
+                <div className="dropdown">
+                  <button className="dropbtn">
+                    What is this supposed to be?
+                    <span className="arrow">
+                      <img src="/arrow_down.svg"></img>
+                    </span>
+                  </button>
+                  <div className="dropdown-content">
+                    <p>This is a dropdown content!</p>
+                    <p>You can add more information here.</p>
+                  </div>
+                </div>
+                <div className="dropdown">
+                  <button className="dropbtn">
+                    What is this supposed to be?
+                    <span className="arrow">
+                      <img src="/arrow_down.svg"></img>
+                    </span>
+                  </button>
+                  <div className="dropdown-content">
+                    <p>This is a dropdown content!</p>
+                    <p>You can add more information here.</p>
+                  </div>
+                </div>
+                <div className="dropdown">
+                  <button className="dropbtn">
+                    What is this supposed to be?
+                    <span className="arrow">
+                      <img src="/arrow_down.svg"></img>
+                    </span>
+                  </button>
+                  <div className="dropdown-content">
+                    <p>This is a dropdown content!</p>
+                    <p>You can add more information here.</p>
+                  </div>
+                </div>
+                <div className="dropdown">
+                  <button className="dropbtn">
+                    What is this supposed to be?
+                    <span className="arrow">
+                      <img src="/arrow_down.svg"></img>
+                    </span>
+                  </button>
+                  <div className="dropdown-content">
+                    <p>This is a dropdown content!</p>
+                    <p>You can add more information here.</p>
+                  </div>
                 </div>
               </div>
             </div>
