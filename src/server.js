@@ -1,10 +1,10 @@
-onst express = require('express');
+const express = require('express');
 const WebSocket = require('ws');
 
 const app = express();
 
 // Initialize WebSocket server
-const wss = new WebSocket.Server({ port: 8080 });
+const wss = new WebSocket.Server({ port: 3000 });
 
 // WebSocket event handling
 wss.on('connection', (ws) => {

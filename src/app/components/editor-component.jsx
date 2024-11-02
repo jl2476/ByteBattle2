@@ -1,4 +1,4 @@
-"use client";
+
 import React, { useEffect, useState } from "react";
 import AceEditor from "react-ace";
 import "ace-builds/src-noconflict/theme-dracula";
@@ -110,8 +110,10 @@ const languageMapping = {
 };
 
 function EditorBody({ storeAt, index }) {
+  
   const classes = useStyles();
-  const [codeFontSize, setCodeFontSize] = useState(window.innerWidth > 600 ? 20 : 14);
+  const [codeFontSize, setCodeFontSize] = useState(14);
+  
   const [showLoader, setShowLoader] = useState(true);
   const [lang, setLang] = useState("");
   const [editorLanguage, setEditorLanguage] = useState("c_cpp");
@@ -121,17 +123,9 @@ function EditorBody({ storeAt, index }) {
   const [executing, setExecuting] = useState(false);
   const [input, setInput] = useState("");
 
-  const notOwner = !(localStorage.getItem("codex-codes") && 
-    JSON.parse(localStorage.getItem("codex-codes"))[index]?.key === storeAt.split("/")[1]);
-
-  useEffect(() => {
-    const handleResize = () => {
-      setCodeFontSize(window.innerWidth > 600 ? 20 : 14);
-    };
-
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
+  const notOwner = typeof window !== "undefined" &&
+    localStorage.getItem("codex-codes") &&
+    JSON.parse(localStorage.getItem("codex-codes"))[index]?.key === storeAt.split("/")[1];
 
   useEffect(() => {
     const db = getDatabase(app);
