@@ -13,7 +13,9 @@ const Nav = () => {
   };
 
   return (
-    <>
+    <div className="nav-container"> {/* Wrap everything in a div for relative positioning */}
+      <img src="/image.png" className="background-image" alt="Background" />
+      
       <div className="container1">
         <p className="logo">ByteBattle</p>
         <div className="container2">
@@ -93,7 +95,7 @@ const Nav = () => {
           </div>
         )}
       </div>
-    </>
+    </div>
   );
 };
 

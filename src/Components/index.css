@@ -1,100 +1,123 @@
 .container1 {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    height: 69px;
-    border: 1px solid black;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 69px;
+  border-bottom: 1px solid white;
 }
 
 .logo {
-    margin-left: 60px;
+  margin-left: 60px;
+  color:white;
 }
 
 .container2 {
-    display: flex;
-    flex-direction: row;
-    width: 285px;
-    height: 23px;
-    gap: 109px;
+  display: flex;
+  flex-direction: row;
+  width: 285px;
+  height: 23px;
+  gap: 109px;
 }
 
 .container3 {
-    width: 204px;
-    height: 69px;
-    border-top-left-radius: 10px;
-    border-bottom-left-radius: 10px;
-    background-color: #9785f27a;
-    color: black;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 20px;
+  width: 204px;
+  height: 69px;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+  background-color: #9785f27a;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
 }
 
 .home {
-    display: flex;
-    gap: 10px;
-    position: relative; /* Make the home links relative for positioning */
+  display: flex;
+  gap: 10px;
+  position: relative; /* Make the home links relative for positioning */
 }
 
 .container2 a {
-    text-decoration: none; 
-    color: black; 
-   
-    border-radius: 20px;
+  text-decoration: none;
+  color: white;
+
+  border-radius: 20px;
 }
 
 .container2 a::after {
-    content: ''; /* Creates a pseudo-element */
-    position: absolute;
-    left: 0; /* Align it to the left of the link */
-    right: 0; /* Stretch it to the right */
-    bottom: -20px; /* Adjusted to position just below the link without affecting size */
-    height: 4px; /* Set the thickness of the border */
-    background-color: black; /* Set the border color */
-    transform: scaleX(0); /* Initially hide the border */
-    transition: transform 0.3s ease; /* Smooth transition for the border */
-    border-radius: 20px;
+  content: ""; /* Creates a pseudo-element */
+  position: absolute;
+  left: 0; /* Align it to the left of the link */
+  right: 0; /* Stretch it to the right */
+  bottom: -20px; /* Adjusted to position just below the link without affecting size */
+  height: 4px; /* Set the thickness of the border */
+  background-color: white; /* Set the border color */
+  transform: scaleX(0); /* Initially hide the border */
+  transition: transform 0.3s ease; /* Smooth transition for the border */
+  border-radius: 20px;
 }
 
 .container2 a:hover::after,
 .container2 a:focus::after,
-.container2 a.active::after { 
-    transform: scaleX(1); 
+.container2 a.active::after {
+  transform: scaleX(1);
 }
 
-.bigPuzz{
-    width: 100%;
-    height: 100%;
-    padding: 20px;
+.nav-container {
+  position: relative; /* Allows absolute positioning of child elements */
+}
+
+.background-image {
+  position: absolute; /* Positioning the image absolutely */
+  top: 0; /* Align to the top */
+  left: 0; /* Align to the left */
+  width: 100%; /* Make it full width */
+  height: auto; /* Maintain aspect ratio */
+  z-index: -1; /* Send the image behind other content */
+}
+
+.container1,
+.container2,
+.container3,
+.bigPuzz,
+.puzzles {
+  position: relative; /* Ensure other content stays above the image */
+  z-index: 1; /* Bring this content in front of the background image */
+}
+
+.bigPuzz {
+  width: 100%;
+  height: 100%;
+  padding: 20px;
 }
 
 .puzzles {
-    width: 234px;
-    height: 402px;
-    border: 1px solid black; /* This should work to display the border */
-    box-sizing: border-box; /* Ensures padding and borders are included in width/height */
-    border-radius: 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 20px;
+  width: 234px;
+  height: 402px;
+  border: 1px solid white; /* This should work to display the border */
+  box-sizing: border-box; /* Ensures padding and borders are included in width/height */
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 20px;
 }
 
-.puz{
-    display: flex;
-    justify-content: space-around;
+.puz {
+  display: flex;
+  justify-content: space-around;
 }
 
-.Prepuz{
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
+.Prepuz {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
-.PuzWeek{
-    display: flex;
-    justify-content: center;
+.PuzWeek {
+  display: flex;
+  justify-content: center;
 }
