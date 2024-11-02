@@ -1,5 +1,4 @@
-"use client";
-
+"use client"
 import React, { useEffect, useState } from "react";
 import { useRouter, useParams } from "next/navigation"; // Use Next.js router
 import brandingLogo from "../components/logo.png";
@@ -76,7 +75,8 @@ const Editor = () => {
     const storedCodes = localStorage.getItem("codex-codes");
     if (storedCodes) {
       const codesArray = JSON.parse(storedCodes);
-      if (Number.isInteger(Number(editorIndex)) && codesArray[editorIndex]?.key === editorID) {
+      const index = Number(editorIndex);
+      if (Number.isInteger(index) && codesArray[index]?.key === editorID) {
         setNotOwner(true);
       }
     }
@@ -96,9 +96,14 @@ const Editor = () => {
 
       const storedCodes = localStorage.getItem("codex-codes");
       if (storedCodes) {
-        const classNames = JSON.parse(storedCodes);
-        if (Number.isInteger(Number(editorIndex)) && classNames[editorIndex]) {
-          classNames[editorIndex].name = className;
+        const classNames: { name: string; key: string }[] = JSON.parse(storedCodes);
+        const index = Number(editorIndex);
+        if (Number.isInteger(index) && classNames[index]) {
+          if (classNames[Number(editorIndex)]) {
+            if (classNames[index]) {
+              classNames[index].name = className;
+            }
+          }
           localStorage.setItem("codex-codes", JSON.stringify(classNames));
         }
       }
