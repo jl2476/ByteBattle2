@@ -32,8 +32,13 @@ function SignUp() {
       console.log('User registered successfully:', username, email);
       // Redirect or show success message
     } catch (error) {
-      //console.error('Registration error:', error.message);
-      //setErrorMessage(error.message);
+      console.error('Registration error:', error);
+
+      if (error instanceof Error) {
+        setErrorMessage(error.message);
+      } else {
+        setErrorMessage('An unknown error occurred.');
+      }
     }
   };  
 
