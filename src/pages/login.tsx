@@ -15,7 +15,7 @@ function Login() {
     setIsLoading(true);
 
     try {
-      // Sign in using email and password
+      
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
 

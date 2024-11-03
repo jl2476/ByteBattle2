@@ -1,31 +1,18 @@
+// Layout.js
 import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import reportWebVitals from './reportWebVitals';
-import {
-  createBrowserRouter,
-  RouterProvider,
-} from "react-router-dom";
-import Layout from './Layout';
-import Home from './pages/home';
-import Puzzle from './Components/puzzle';
+import { Outlet, Link } from 'react-router-dom';
 
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <Layout />,
-    children: [
-      { path: "/", element: <Home /> },
-      { path: "/puzzle", element: <Puzzle /> },
-    ],
-  },
-]);
+const Layout = () => {
+  return (
+    <div>
+      <nav>
+        <Link to="/">Home</Link> | 
+        <Link to="/puzzle">Puzzle</Link> | 
+        <Link to="/code">Code</Link>
+      </nav>
+      <Outlet /> 
+    </div>
+  );
+};
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
-  <React.StrictMode>
-    <RouterProvider router={router} />
-  </React.StrictMode>
-);
-
-reportWebVitals();
+export default Layout;

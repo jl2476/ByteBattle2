@@ -1,6 +1,6 @@
-// app/layout.js or app/layout.tsx
-import './globals.css'; // Import global CSS here
-import Header from '@/pages/home'; // Import Header if it should be persistent
+
+import './globals.css'; 
+import Header from '../Components/Nav'; 
 
 export const metadata = {
   title: 'Your Website Title',
@@ -11,7 +11,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
-        <Header /> {/* Persistent Header */}
+        <Header />
       
       </body>
     </html>
