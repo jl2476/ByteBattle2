@@ -22,7 +22,7 @@
 }
 
 .container3 {
-  width: 204px;
+  width: 300px;
   height: 69px;
   border-top-left-radius: 10px;
   border-bottom-left-radius: 10px;
@@ -31,7 +31,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 20px;
+  gap: 20px; /* Space between icon and user info */
 }
 
 .home {
@@ -292,7 +292,7 @@
 }
 
 .sign-in-form {
-  background-color: #B09BFA;
+  background-color: #b09bfa;
   padding: 40px;
   border-radius: 20px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
@@ -403,34 +403,57 @@ h2 {
 }
 
 .history {
-    width: 300px;
-    height: 45px;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
-    align-items: center;
-    font-size: 20px;
-    white-space: nowrap; /* Prevent text wrapping */
-    border-left: 4px solid #C04345;
-    border-radius: 10px;
+  width: 300px;
+  height: 45px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  font-size: 20px;
+  white-space: nowrap; /* Prevent text wrapping */
+  border-left: 4px solid #c04345;
+  border-radius: 10px;
 }
 
 .history1 {
-    width: 300px;
-    height: 45px;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
-    align-items: center;
-    font-size: 20px;
-    white-space: nowrap; /* Prevent text wrapping */
-    border-left: 4px solid #43c06d;
-    border-radius: 10px;
+  width: 300px;
+  height: 45px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  font-size: 20px;
+  white-space: nowrap; /* Prevent text wrapping */
+  border-left: 4px solid #43c06d;
+  border-radius: 10px;
 }
 
-.star{
-    display: flex;
-    flex-direction: row;
-    gap: 10px;
-    justify-content: center;
+.star {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  justify-content: center;
+}
+
+.profile-area {
+  display: flex;
+  align-items: center;
+}
+
+.user-info {
+  display: flex;
+  flex-direction: column; /* Arrange email and sign-out button in a row */
+  align-items: center; /* Center vertically */
+  gap: 10px; /* Optional: Space between email and sign-out button */
+}
+
+.user-info span {
+  margin-right: 10px; /* Optional: space between email and sign-out button */
+}
+
+.sign-out-button {
+  background-color: transparent; /* Adjust as needed */
+  border: none; /* Adjust as needed */
+  cursor: pointer; /* Adjust as needed */
+  color: white; /* Make sure the sign-out button text is visible */
 }

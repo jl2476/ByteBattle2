@@ -1,25 +1,29 @@
 "use client"; // Required for Next.js components that use client-side features
 import React, { useEffect, useState } from "react";
-import { auth } from '../utils/firebase'; // Make sure this path is correct
-import { signInWithEmailAndPassword, sendPasswordResetEmail, createUserWithEmailAndPassword, onAuthStateChanged, signOut } from 'firebase/auth';
-import { FirebaseError } from 'firebase/app';
-import Link from "next/link"; // Import Link from Next.js
-import "./index.css";
+import { auth } from "../utils/firebase"; // Make sure this path is correct
 import {
-  getFirestore,
-  doc,
-  setDoc,
-} from 'firebase/firestore';
+  signInWithEmailAndPassword,
+  sendPasswordResetEmail,
+  createUserWithEmailAndPassword,
+  onAuthStateChanged,
+  signOut,
+} from "firebase/auth";
+import { FirebaseError } from "firebase/app";
+import Link from "next/link"; // Import Link from Next.js
+import { User } from "firebase/auth";
+
+import "./index.css";
+import { getFirestore, doc, setDoc } from "firebase/firestore";
 
 const SignInForm = ({ onClose }) => {
   const [isRegister, setIsRegister] = useState(false);
   const [isResetPassword, setIsResetPassword] = useState(false); // State for reset password mode
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [errorMessage, setErrorMessage] = useState('');
-  const [message, setMessage] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const [message, setMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [username, setUsername] = useState('');
+  const [username, setUsername] = useState("");
   const db = getFirestore();
 
   const handleRegister = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -28,46 +32,52 @@ const SignInForm = ({ onClose }) => {
 
     e.preventDefault();
     setIsLoading(true);
-    setErrorMessage('');
+    setErrorMessage("");
 
     try {
       // Create user with email and password
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
       const user = userCredential.user;
-  
+
       // Store additional user info in Firestore
-      await setDoc(doc(db, 'users', user.uid), {
+      await setDoc(doc(db, "users", user.uid), {
         username: username,
         email: email,
       });
-  
-      console.log('User registered successfully:', username, email);
+
+      console.log("User registered successfully:", username, email);
       // Redirect or show success message
     } catch (error) {
-      console.error('Registration error:', error);
- 
+      console.error("Registration error:", error);
+
       if (error instanceof FirebaseError) {
         switch (error.code) {
-          case 'auth/weak-password':
-            setErrorMessage('Password should be at least 6 characters.');
+          case "auth/weak-password":
+            setErrorMessage("Password should be at least 6 characters.");
             break;
-          case 'auth/email-already-in-use':
-            setErrorMessage('This email is already registered. Please log in or use a different email.');
+          case "auth/email-already-in-use":
+            setErrorMessage(
+              "This email is already registered. Please log in or use a different email."
+            );
             break;
-          case 'auth/invalid-email':
-            setErrorMessage('The email address is not valid.');
+          case "auth/invalid-email":
+            setErrorMessage("The email address is not valid.");
             break;
           default:
-            setErrorMessage('An error occurred during registration. Please try again.');
+            setErrorMessage(
+              "An error occurred during registration. Please try again."
+            );
         }
       } else {
-        setErrorMessage('An unknown error occurred.');
+        setErrorMessage("An unknown error occurred.");
       }
-    } 
-    finally {
+    } finally {
       setIsLoading(false); // Reset loading state
     }
-
   };
 
   const handleSignIn = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -76,48 +86,58 @@ const SignInForm = ({ onClose }) => {
 
     try {
       // Sign in using email and password
-      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
       const user = userCredential.user;
 
-      console.log('User logged in successfully:', user);
+      console.log("User logged in successfully:", user);
     } catch (error) {
-      console.error('Login error:', error);
+      console.error("Login error:", error);
       if (error instanceof FirebaseError) {
-        switch(error.code){
-            case 'auth/invalid-email':
-            setErrorMessage('Invalid email format.');
+        switch (error.code) {
+          case "auth/invalid-email":
+            setErrorMessage("Invalid email format.");
             break;
-            case 'auth/user-disabled':
-            setErrorMessage('This account has been disabled.');
+          case "auth/user-disabled":
+            setErrorMessage("This account has been disabled.");
             break;
-            case 'auth/user-not-found':
-            setErrorMessage('No user found with this email.');
+          case "auth/user-not-found":
+            setErrorMessage("No user found with this email.");
             break;
-            case 'auth/wrong-password':
-            setErrorMessage('Incorrect password.');
+          case "auth/wrong-password":
+            setErrorMessage("Incorrect password.");
             break;
-            case 'auth/too-many-requests':
-            setErrorMessage('Too many login attempts. Please try again later.');
+          case "auth/too-many-requests":
+            setErrorMessage("Too many login attempts. Please try again later.");
             break;
-            case 'auth/network-request-failed':
-            setErrorMessage('Network error. Please check your internet connection.');
+          case "auth/network-request-failed":
+            setErrorMessage(
+              "Network error. Please check your internet connection."
+            );
             break;
-            case 'auth/internal-error':
-            setErrorMessage('An error occurred. Please try again.');
+          case "auth/internal-error":
+            setErrorMessage("An error occurred. Please try again.");
             break;
-            case 'auth/operation-not-allowed':
-            setErrorMessage('Sign-in with email/password is disabled.');
+          case "auth/operation-not-allowed":
+            setErrorMessage("Sign-in with email/password is disabled.");
             break;
-            case 'auth/invalid-api-key':
-            setErrorMessage('Invalid API key. Please check your configuration.');
+          case "auth/invalid-api-key":
+            setErrorMessage(
+              "Invalid API key. Please check your configuration."
+            );
             break;
-            case 'auth/invalid-credential':
-            setErrorMessage('Invalid credentials. Please check your email/password again.');
+          case "auth/invalid-credential":
+            setErrorMessage(
+              "Invalid credentials. Please check your email/password again."
+            );
             break;
-            default:
-                setErrorMessage('An unexpected error occurred.');
+          default:
+            setErrorMessage("An unexpected error occurred.");
         }
-      } 
+      }
     } finally {
       setIsLoading(false);
     }
@@ -129,22 +149,24 @@ const SignInForm = ({ onClose }) => {
 
     e.preventDefault();
     setIsLoading(true);
-    setErrorMessage('');
-    setMessage('');
+    setErrorMessage("");
+    setMessage("");
 
     try {
       await sendPasswordResetEmail(auth, email);
-      setMessage('Password reset email sent! Check your inbox.');
+      setMessage("Password reset email sent! Check your inbox.");
     } catch (error) {
-      console.error('Password reset error:', error);
+      console.error("Password reset error:", error);
       if (error instanceof FirebaseError) {
-        switch(error.code){
-          case 'auth/user-not-found':
-            setErrorMessage('No user found with this email.');
-          case 'auth/invalid-email':
-            setErrorMessage('Invalid email format.');
+        switch (error.code) {
+          case "auth/user-not-found":
+            setErrorMessage("No user found with this email.");
+          case "auth/invalid-email":
+            setErrorMessage("Invalid email format.");
           default:
-            setErrorMessage('Failed to send password reset email. Please try again.');
+            setErrorMessage(
+              "Failed to send password reset email. Please try again."
+            );
         }
       }
     } finally {
@@ -158,17 +180,32 @@ const SignInForm = ({ onClose }) => {
         &times; {/* Close symbol */}
       </button>
       <div className="signIn">
-        <h2> {isRegister ? "Register" : isResetPassword ? "Reset Password" : "Sign In"}</h2>
-        <form onSubmit={isRegister ? handleRegister : isResetPassword ? handleResetPassword : handleSignIn}>
+        <h2>
+          {" "}
+          {isRegister
+            ? "Register"
+            : isResetPassword
+            ? "Reset Password"
+            : "Sign In"}
+        </h2>
+        <form
+          onSubmit={
+            isRegister
+              ? handleRegister
+              : isResetPassword
+              ? handleResetPassword
+              : handleSignIn
+          }
+        >
           {isRegister && (
             <div>
               <label htmlFor="username">Username:</label>
               <input
-              type="text"
-              id="username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              required
+                type="text"
+                id="username"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                required
               />
             </div>
           )}
@@ -182,18 +219,18 @@ const SignInForm = ({ onClose }) => {
           />
           {!isResetPassword && (
             <div>
-            <label htmlFor="password">Password:</label>
-            <input
-              type="password"
-              id="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-          </div>
+              <label htmlFor="password">Password:</label>
+              <input
+                type="password"
+                id="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+            </div>
           )}
-          {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
-          {message && <p style={{ color: 'black' }}>{message}</p>}
+          {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
+          {message && <p style={{ color: "black" }}>{message}</p>}
 
           <div className="form-buttons">
             {!isRegister && !isResetPassword && (
@@ -232,7 +269,7 @@ const Nav = () => {
   const [activeLink, setActiveLink] = useState("/");
   const [openDropdown, setOpenDropdown] = useState(null);
   const [showSignInForm, setShowSignInForm] = useState(false);
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState<User | null>(null); // Explicitly type the user state
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -251,7 +288,7 @@ const Nav = () => {
   };
 
   // Function to handle link click
-  const handleLinkClick = (path: string) => {
+  const handleLinkClick = (path) => {
     setActiveLink(path);
   };
 
@@ -286,12 +323,22 @@ const Nav = () => {
           </Link>
         </div>
         {user ? (
-          <div className="profile-area">
-            <span>{user.displayName || user.email}</span>
-            <button onClick={handleSignOut} className="sign-out-button">Sign Out</button>
+          <div className="container3">
+            <img src="/profile.svg" alt="Profile" />
+            <div className="user-info">
+              {" "}
+              {/* New container for email and sign-out */}
+              <span>{user.displayName || user.email}</span>
+              <button onClick={handleSignOut} className="sign-out-button">
+                Sign Out
+              </button>
+            </div>
           </div>
         ) : (
-          <button className="container3" onClick={() => setShowSignInForm(true)}>
+          <button
+            className="container3"
+            onClick={() => setShowSignInForm(true)}
+          >
             <img src="/profile.svg" alt="Profile" />
             Sign In/Register
           </button>
@@ -394,7 +441,6 @@ const Nav = () => {
                     </button>
 
                   )} */}
-                
                 </div>
               </div>
               <div className="puzzles4">
@@ -479,4 +525,3 @@ export default Nav;
 function setUser(currentUser: import("@firebase/auth").User | null) {
   throw new Error("Function not implemented.");
 }
-
