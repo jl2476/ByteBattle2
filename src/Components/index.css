@@ -230,20 +230,20 @@ border: none; /* Optional: Remove any default borders */
 
 .dropdown {
   position: relative;
-  display: inline-block;
+  width: 100%; /* Ensures it stretches to the row width */
 }
 
 .dropbtn {
-  color: white; /* White text */
-  padding: 10px; /* Some padding */
-  font-size: 16px; /* Font size */
-  border: none; /* No border */
-  cursor: pointer; /* Pointer cursor on hover */
-  border-radius: 5px; /* Rounded corners */
-  display: flex; /* Use flexbox for better alignment */
-  align-items: center; /* Center items vertically */
-  gap: 20px;
-  justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  background-color: transparent;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  color: white;
 }
 
 .arrow {
@@ -251,30 +251,33 @@ border: none; /* Optional: Remove any default borders */
 }
 
 .dropdown-content {
-  display: none; /* Hidden by default */
-  position: absolute; /* Position it below the button */
-  background-color: #f9f9f9; /* White background */
-  min-width: 160px; /* Minimum width */
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Drop shadow */
-  z-index: 1; /* On top */
-  border-radius: 5px; /* Rounded corners */
+  display: none; /* Hide content by default */
+  position: relative;
+  margin-top: 5px;
+  background-color: #b09bfa;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  color: #ffffff;
+  transition: all 0.3s ease-out;
+}
+
+.dropdown-content.open {
+  display: block; /* Show content when open */
 }
 
 .dropdown-content p {
-  color: black; /* Black text */
-  padding: 12px 16px; /* Padding inside the dropdown */
-  text-decoration: none; /* No underline */
-  display: block; /* Block display */
+  color: white;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
 }
 
-.dropdown:hover .dropdown-content {
-  display: block; /* Show the dropdown on hover */
-}
 
 .drop {
   display: flex;
-  justify-content: center;
   flex-direction: column;
+  gap: 10px; /* Add space between dropdowns */
 }
 
 .leaderboard {

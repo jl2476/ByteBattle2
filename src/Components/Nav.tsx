@@ -294,7 +294,7 @@ const Nav = () => {
 
   // Function to toggle dropdown
   const toggleDropdown = (index) => {
-    setOpenDropdown(openDropdown === index ? null : index); // Toggle the dropdown
+    setOpenDropdown(openDropdown === index ? null : index); // Toggle selected dropdown
   };
 
   return (
@@ -400,7 +400,7 @@ const Nav = () => {
               <div className="puzzles">
                 <p className="PuzWeek">FAQ</p>
                 <div className="drop">
-                  {Array.from({ length: 7 }).map((_, index) => (
+                  {Array.from({ length: 4 }).map((_, index) => (
                     <div className="dropdown" key={index}>
                       <button
                         className="dropbtn"
@@ -408,15 +408,26 @@ const Nav = () => {
                       >
                         What is this supposed to be?
                         <span className="arrow">
-                          <img src="/arrow_down.svg" alt="Arrow" />
+                          <img
+                            src="/arrow_down.svg"
+                            alt="Arrow"
+                            style={{
+                              transform:
+                                openDropdown === index
+                                  ? "rotate(180deg)"
+                                  : "rotate(0deg)",
+                            }}
+                          />
                         </span>
                       </button>
-                      {openDropdown === index && (
-                        <div className="dropdown-content">
-                          <p>This is a dropdown content!</p>
-                          <p>You can add more information here.</p>
-                        </div>
-                      )}
+                      <div
+                        className={`dropdown-content ${
+                          openDropdown === index ? "open" : ""
+                        }`}
+                      >
+                        <p>This is a dropdown content!</p>
+                        <p>You can add more information here.</p>
+                      </div>
                     </div>
                   ))}
                 </div>
@@ -454,7 +465,6 @@ const Nav = () => {
                 </div>
 
                 <div className="Status">
-                  
                   <div className="status_col">
                     <div>
                       <img src="/gold.svg"></img>
