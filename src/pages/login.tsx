@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { auth } from '../utils/firebase'; // Make sure this path is correct
 import { signInWithEmailAndPassword } from 'firebase/auth';
+import { FirebaseError } from 'firebase/app';
 
 function Login() {
   const [email, setEmail] = useState('');
@@ -21,8 +22,41 @@ function Login() {
       // Redirect or show success message
     } catch (error) {
       console.error('Login error:', error);
-      if (error instanceof Error) {
-        setErrorMessage(error.message || 'An error occurred during login.');
+      if (error instanceof FirebaseError) {
+        switch(error.code){
+            case 'auth/invalid-email':
+            setErrorMessage('Invalid email format.');
+            break;
+            case 'auth/user-disabled':
+            setErrorMessage('This account has been disabled.');
+            break;
+            case 'auth/user-not-found':
+            setErrorMessage('No user found with this email.');
+            break;
+            case 'auth/wrong-password':
+            setErrorMessage('Incorrect password.');
+            break;
+            case 'auth/too-many-requests':
+            setErrorMessage('Too many login attempts. Please try again later.');
+            break;
+            case 'auth/network-request-failed':
+            setErrorMessage('Network error. Please check your internet connection.');
+            break;
+            case 'auth/internal-error':
+            setErrorMessage('An error occurred. Please try again.');
+            break;
+            case 'auth/operation-not-allowed':
+            setErrorMessage('Sign-in with email/password is disabled.');
+            break;
+            case 'auth/invalid-api-key':
+            setErrorMessage('Invalid API key. Please check your configuration.');
+            break;
+            case 'auth/invalid-credential':
+            setErrorMessage('Invalid credentials. Please check your email/password again.');
+            break;
+            default:
+                setErrorMessage('An unexpected error occurred.');
+        }
       } 
     } finally {
       setIsLoading(false);
