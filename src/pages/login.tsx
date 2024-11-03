@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { auth } from '../utils/firebase'; // Make sure this path is correct
-import { signInWithEmailAndPassword } from 'firebase/auth';
+import { signInWithEmailAndPassword, sendPasswordResetEmail } from 'firebase/auth';
 import { FirebaseError } from 'firebase/app';
 
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+  const [message, setMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -14,12 +15,11 @@ function Login() {
     setIsLoading(true);
 
     try {
-      // Sign in with email and password
+      // Sign in using email and password
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
 
       console.log('User logged in successfully:', user);
-      // Redirect or show success message
     } catch (error) {
       console.error('Login error:', error);
       if (error instanceof FirebaseError) {
@@ -58,6 +58,32 @@ function Login() {
                 setErrorMessage('An unexpected error occurred.');
         }
       } 
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleForgotPassword = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setIsLoading(true);
+    setErrorMessage('');
+    setMessage('');
+
+    try {
+      await sendPasswordResetEmail(auth, email);
+      setMessage('Password reset email sent! Check your inbox.');
+    } catch (error) {
+      console.error('Password reset error:', error);
+      if (error instanceof FirebaseError) {
+        switch(error.code){
+          case 'auth/user-not-found':
+            setErrorMessage('No user found with this email.');
+          case 'auth/invalid-email':
+            setErrorMessage('Invalid email format.');
+          default:
+            setErrorMessage('Failed to send password reset email. Please try again.');
+        }
+      }
     } finally {
       setIsLoading(false);
     }
