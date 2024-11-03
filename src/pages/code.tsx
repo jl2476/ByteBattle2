@@ -294,13 +294,13 @@ const Code = () => {
   const toggleDropdown = (index) => {
     setOpenDropdown(openDropdown === index ? null : index); // Toggle the dropdown
   };
-  const [activeIndex, setActiveIndex] = useState<number | null>(null);
+  const [activeSection, setActiveSection] = useState("testCases");
 
-  const handleClick = (index: number) => {
-    // If the same test case is clicked again, it unselects it
-    setActiveIndex((prevIndex) => (prevIndex === index ? null : index));
+  const handleClick = (section) => {
+    setActiveSection(section);
   };
 
+  const [activeIndex, setActiveIndex] = useState(null);
   const testCaseContent = [
     "Content for Test Case 1: Description or example here.",
     "Content for Test Case 2: Additional details here.",
@@ -312,11 +312,12 @@ const Code = () => {
     <>
       <div className="nav-container">
         {" "}
-        
         <img src="/image.png" className="background-image" alt="Background" />
         <div className="container1">
           <div className="navLeft">
-          <Link href="/" className="logo">ByteBattle</Link>
+            <Link href="/" className="logo">
+              ByteBattle
+            </Link>
             <div className="butn">
               <button className="prev">
                 <img src="/prevButton.svg"></img>
@@ -342,7 +343,6 @@ const Code = () => {
               <img src="/profile.svg" alt="Profile" />
               <div className="user-info">
                 {" "}
-               
                 <span>{user.displayName || user.email}</span>
                 <button onClick={handleSignOut} className="sign-out-button">
                   Sign Out
@@ -367,7 +367,6 @@ const Code = () => {
       </div>
       <div className="bigPuzz">
         <div className="puzzles3">
-          
           <div className="profile">
             <p className="sum">1: Two Sum</p>
             <div className="chall">
@@ -414,31 +413,48 @@ const Code = () => {
         <div className="smallPuzz">
           <div className="puzzles4"></div>
           <div className="puzzles5">
-            <div className="test">
-              <p>Test Cases</p>
-              {["Test Case 1", "Test Case 2", "Test Case 3", "Test Case 4"].map(
-                (caseName, index) => (
+            {/* Navigation Section */}
+            <div className="navigation">
+              <button onClick={() => handleClick("testCases")}>
+                Test Cases
+              </button>
+              <button onClick={() => handleClick("terminal")}>Terminal</button>
+            </div>
+
+            {/* Conditional Rendering Based on Active Section */}
+            {activeSection === "testCases" && (
+              <div className="test">
+              
+                {[
+                  "Test Case 1",
+                  "Test Case 2",
+                  "Test Case 3",
+                  "Test Case 4",
+                ].map((caseName, index) => (
                   <div
                     key={index}
                     className="test-case-container"
                     onClick={() => handleClick(index)}
                   >
-                    <p
-                      className={`test-case ${
-                        activeIndex === index ? "clicked" : ""
-                      }`}
-                    >
-                      {caseName}
-                    </p>
-                    {activeIndex === index && <div className="underline"></div>}
+                    <p className={`test-case`}>{caseName}</p>
                   </div>
-                )
-              )}
-            </div>
+                ))}
+                {/* Displaying Content of Active Test Case */}
+                {activeIndex !== null && (
+                  <div className="test-case-content">
+                    <p>{testCaseContent[activeIndex]}</p>
+                  </div>
+                )}
+              </div>
+            )}
 
-            {activeIndex !== null && (
-              <div className="test-case-content">
-                <p>{testCaseContent[activeIndex]}</p>
+            {activeSection === "terminal" && (
+              <div className="terminal-section">
+                <p>Terminal Output</p>
+                {/* Replace this with your terminal content */}
+                <div className="terminal-content">
+                  <p>Output will be displayed here...</p>
+                </div>
               </div>
             )}
           </div>
