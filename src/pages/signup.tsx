@@ -4,7 +4,7 @@ import {
   setDoc,
 } from 'firebase/firestore'
 import React, { useState } from 'react';
-import { auth } from '../utils/firebase'; // Import the Firebase auth
+import { auth } from '../utils/firebase';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { FirebaseError } from 'firebase/app';
 
@@ -22,18 +22,18 @@ function SignUp() {
     setErrorMessage('');
   
     try {
-      // Create user with email and password
+   
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
   
-      // Store additional user info in Firestore
+      
       await setDoc(doc(db, 'users', user.uid), {
         username: username,
         email: email,
       });
   
       console.log('User registered successfully:', username, email);
-      // Redirect or show success message
+      
     } catch (error) {
       console.error('Registration error:', error);
  
@@ -56,12 +56,10 @@ function SignUp() {
       }
     } 
     finally {
-      setIsLoading(false); // Reset loading state
+      setIsLoading(false); 
     }
 
-    //if (process.env.NODE_ENV === 'development') {
-    //  console.clear(); // Clears the error overlay in the console
-    //}
+ 
 
   };  
 

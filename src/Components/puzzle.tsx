@@ -1,6 +1,6 @@
-"use client"; // Required for Next.js components that use client-side features
+"use client"; 
 import React, { useState } from "react";
-import Link from "next/link"; // Import Link from Next.js
+import Link from "next/link"; 
 import "./index.css";
 const Puzzle = () => {
  

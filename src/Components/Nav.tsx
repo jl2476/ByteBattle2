@@ -1,6 +1,6 @@
-"use client"; // Required for Next.js components that use client-side features
+"use client"; 
 import React, { useEffect, useState } from "react";
-import { auth } from "../utils/firebase"; // Make sure this path is correct
+import { auth } from "../utils/firebase";
 import {
   signInWithEmailAndPassword,
   sendPasswordResetEmail,
@@ -9,7 +9,7 @@ import {
   signOut,
 } from "firebase/auth";
 import { FirebaseError } from "firebase/app";
-import Link from "next/link"; // Import Link from Next.js
+import Link from "next/link"; 
 import { User } from "firebase/auth";
 
 import "./index.css";
@@ -17,7 +17,7 @@ import { getFirestore, doc, setDoc } from "firebase/firestore";
 
 const SignInForm = ({ onClose }) => {
   const [isRegister, setIsRegister] = useState(false);
-  const [isResetPassword, setIsResetPassword] = useState(false); // State for reset password mode
+  const [isResetPassword, setIsResetPassword] = useState(false); 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
@@ -269,38 +269,38 @@ const Nav = () => {
   const [activeLink, setActiveLink] = useState("/");
   const [openDropdown, setOpenDropdown] = useState(null);
   const [showSignInForm, setShowSignInForm] = useState(false);
-  const [user, setUser] = useState<User | null>(null); // Explicitly type the user state
+  const [user, setUser] = useState<User | null>(null); 
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
     });
-    return () => unsubscribe(); // Clean up listener on component unmount
+    return () => unsubscribe(); 
   }, []);
 
   const handleSignOut = async () => {
     try {
       await signOut(auth);
-      setUser(null); // Clear user from state after sign-out
+      setUser(null); 
     } catch (error) {
       console.error("Error signing out:", error);
     }
   };
 
-  // Function to handle link click
+
   const handleLinkClick = (path) => {
     setActiveLink(path);
   };
 
-  // Function to toggle dropdown
+
   const toggleDropdown = (index) => {
-    setOpenDropdown(openDropdown === index ? null : index); // Toggle selected dropdown
+    setOpenDropdown(openDropdown === index ? null : index); 
   };
 
   return (
     <div className="nav-container">
       {" "}
-      {/* Wrap everything in a div for relative positioning */}
+     
       <img src="/image.png" className="background-image" alt="Background" />
       <div className="container1">
         <Link href="/" passHref>
@@ -329,7 +329,7 @@ const Nav = () => {
             <img src="/profile.svg" alt="Profile" />
             <div className="user-info">
               {" "}
-              {/* New container for email and sign-out */}
+           
               <span>{user.displayName || user.email}</span>
               <button onClick={handleSignOut} className="sign-out-button">
                 Sign Out
@@ -351,10 +351,10 @@ const Nav = () => {
           <SignInForm onClose={() => setShowSignInForm(false)} />
         </div>
       )}
-      {/* Conditional rendering based on active link */}
+    
       <div className="">
         {activeLink === "/" ? (
-          // Home Page Content
+       
           <div className="BigPuzz">
             <div className="bigPuzz">
               <div className="puzzles">
@@ -398,7 +398,7 @@ const Nav = () => {
                 </div>
               </div>
 
-              {/* dropdown */}
+           
               <div className="puzzles">
                 <p className="PuzWeek">FAQ</p>
                 <div className="drop">
@@ -446,16 +446,7 @@ const Nav = () => {
                   <Link href="/code" passHref>
                     <button className="play">Play</button>
                   </Link>
-                  {/* {isCountingDown ? (
-                    <div className="countdown">
-                      <p>Time left: {formatTime(timeLeft)}</p>
-                    </div>
-                  ) : (
-                    <button className="play" onClick={startCountdown}>
-                      Play
-                    </button>
-
-                  )} */}
+                  
                 </div>
               </div>
               <div className="puzzles4">
@@ -579,7 +570,7 @@ const Nav = () => {
             </div>
           </div>
         ) : (
-          // Puzzle Page Content
+         
           <div className="Big">
             <div className="left">
               <div className="puzzles">

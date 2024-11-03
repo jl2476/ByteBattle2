@@ -312,7 +312,7 @@ const Code = () => {
     <>
       <div className="nav-container">
         {" "}
-        {/* Wrap everything in a div for relative positioning */}
+        
         <img src="/image.png" className="background-image" alt="Background" />
         <div className="container1">
           <div className="navLeft">
@@ -342,7 +342,7 @@ const Code = () => {
               <img src="/profile.svg" alt="Profile" />
               <div className="user-info">
                 {" "}
-                {/* New container for email and sign-out */}
+               
                 <span>{user.displayName || user.email}</span>
                 <button onClick={handleSignOut} className="sign-out-button">
                   Sign Out
@@ -367,7 +367,7 @@ const Code = () => {
       </div>
       <div className="bigPuzz">
         <div className="puzzles3">
-          {/* left bar */}
+          
           <div className="profile">
             <p className="sum">1: Two Sum</p>
             <div className="chall">

@@ -1,15 +1,15 @@
 // Home.js
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
- // Adjust the path as necessary
+ 
  const CountdownPlayButton: React.FC = () => {
     const [isCountingDown, setIsCountingDown] = useState(false);
-    const [timeLeft, setTimeLeft] = useState(300); // 5 minutes in seconds
+    const [timeLeft, setTimeLeft] = useState(300); 
     const navigate = useNavigate();
   
     const startCountdown = () => {
       setIsCountingDown(true);
-      setTimeLeft(300); // Reset to 5 minutes (300 seconds)
+      setTimeLeft(300); 
     };
   
     useEffect(() => {
@@ -20,10 +20,10 @@ import { useNavigate } from 'react-router-dom';
           setTimeLeft((prevTime) => prevTime - 1);
         }, 1000);
       } else if (timeLeft === 0) {
-        navigate("/puzzle"); // Redirect when countdown ends
+        navigate("/puzzle");
       }
   
-      return () => clearInterval(countdownInterval); // Clean up interval on unmount
+      return () => clearInterval(countdownInterval); 
     }, [isCountingDown, timeLeft, navigate]);
   
     const formatTime = (seconds: number) => {
@@ -43,7 +43,7 @@ const Home = () => {
   return (
     <div>
       <h1>Welcome to the Home Page</h1>
-      <CountdownPlayButton /> {/* This must be under a route provided by RouterProvider */}
+      <CountdownPlayButton /> 
     </div>
   );
 };
