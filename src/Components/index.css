@@ -89,12 +89,20 @@
 }
 
 .bigPuzz {
-  width: 100%;
+  width: 280px;
   height: 100%;
-  padding: 20px;
+  
   display: flex;
   flex-direction: column;
   gap: 20px;
+}
+
+.BigPuzz{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 20px;
 }
 
 .puzzles {
@@ -110,6 +118,86 @@
   padding: 10px;
   /* Add drop shadow */
   box-shadow: 0 4.7px 4.7px 4px rgba(188, 169, 254, 0.5); /* BCA9FE with blur and spread */
+}
+
+.puzzles2{
+    width: 1100px;
+    height: 402px;
+    background-color: #b09bfa7a; /* This should work to display the border */
+    box-sizing: border-box; /* Ensures padding and borders are included in width/height */
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 20px;
+    padding: 10px;
+    align-items: center;
+    color:white;
+    /* Add drop shadow */
+    box-shadow: 0 4.7px 4.7px 4px rgba(188, 169, 254, 0.5); /* BCA9FE with blur and spread */
+}
+
+.play {
+    width: 200px;
+    height: 50px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #4E76D0, #6D39CF); /* Linear gradient from left to right */
+    font-size: 24px;
+}
+
+.code{
+    font-family: 'Inter', sans-serif; 
+    font-weight: 600;
+    font-size: 100px;
+}
+
+.code2 {
+    font-family: 'Inter', sans-serif; 
+    font-size: 30px;
+    width: 900px;
+    display: flex;
+    align-items: center;  /* Vertically centers the content */
+    justify-content: center; /* Horizontally centers the content */
+    text-align: center; /* Centers text in the flex item */
+}
+
+
+.puzzles3{
+    width: 300px;
+    height: 402px;
+    background-color: #b09bfa7a; /* This should work to display the border */
+    box-sizing: border-box; /* Ensures padding and borders are included in width/height */
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 20px;
+    padding: 10px;
+    /* Add drop shadow */
+    box-shadow: 0 4.7px 4.7px 4px rgba(188, 169, 254, 0.5); /* BCA9FE with blur and spread */
+}
+
+.puzzles4{
+    width: 1100px;
+    height: 402px;
+    background-color: #b09bfa7a; /* This should work to display the border */
+    box-sizing: border-box; /* Ensures padding and borders are included in width/height */
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px;
+    align-items: left;
+    color:white;
+    /* Add drop shadow */
+    box-shadow: 0 4.7px 4.7px 4px rgba(188, 169, 254, 0.5); /* BCA9FE with blur and spread */
+}
+
+.midPuzz{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }
 
 .puz {
@@ -177,4 +265,10 @@
     display: flex;
     justify-content: center;
     flex-direction: column;
+}
+
+.leaderboard{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
 }
