@@ -462,3 +462,120 @@ h2 {
   cursor: pointer; /* Adjust as needed */
   color: white; /* Make sure the sign-out button text is visible */
 }
+
+.Big{
+  padding: 20px;
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+}
+
+.left{
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.right {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column; /* Ensures vertical alignment if needed */
+  gap: 40px;
+}
+.search-container {
+  width: 600px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  background-color: #b09bfa7a;
+  border-radius: 20px;
+  padding: 10px 20px; /* Adjust padding for icon spacing */
+  box-shadow: 0 4.7px 4.7px 4px rgba(188, 169, 254, 0.5);
+  gap: 20px;
+  color: white;
+  box-sizing: border-box;
+  justify-content: center;
+  margin-left: 20px;
+}
+
+.puzzle{
+  width: 1400px;
+  height: 618px;
+  display: flex;
+  align-items: center;
+  background-color: #b09bfa7a;
+  border-radius: 20px;
+  padding: 20px; /* Adjust padding for icon spacing */
+  box-shadow: 0 4.7px 4.7px 4px rgba(188, 169, 254, 0.5);
+  gap: 20px;
+  flex-direction: column;
+  color: white;
+  box-sizing: border-box;
+  justify-content: center;
+  margin-left: 20px;
+}
+
+.search-icon {
+  width: 20px; /* Adjust icon size if needed */
+  height: 20px;
+}
+
+.search-input {
+  flex-grow: 1;
+  background-color: transparent;
+  border: none;
+  color: white;
+  font-size: 16px;
+  outline: none; /* Remove default outline */
+}
+
+.search-input::placeholder {
+  color: white; /* Adjust placeholder color if needed */
+  opacity: 0.8;
+}
+
+.Bfilter{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.filter{
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+}
+
+.Status{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 30px;
+}
+
+.Status_row{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  gap: 350px;
+}
+
+.status_col{
+  display: flex;
+ flex-direction: row;
+ justify-content: space-between;
+ width: 100%;
+}
+
+.py{
+  display: flex;
+ flex-direction: row;
+ justify-content: center;
+ align-items: center;
+ gap: 20px;
+}
+

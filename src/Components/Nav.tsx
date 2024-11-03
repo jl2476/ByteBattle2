@@ -512,8 +512,185 @@ const Nav = () => {
           </div>
         ) : (
           // Puzzle Page Content
-          <div className="">
-            <p>All puzzles</p>
+          <div className="Big">
+            <div className="left">
+              <div className="puzzles">
+                <p className="PuzWeek">Puzzles of the week</p>
+                <div className="Prepuz">
+                  <div className="puz">
+                    <img src="/puzzle.svg" alt="Puzzle" />
+                    <p>Sum it up</p>
+                    <p>Easy</p>
+                  </div>
+                  <div className="puz">
+                    <img src="/puzzle.svg" alt="Puzzle" />
+                    <p>Sum it up</p>
+                    <p>Easy</p>
+                  </div>
+                  <div className="puz">
+                    <img src="/puzzle.svg" alt="Puzzle" />
+                    <p>Sum it up</p>
+                    <p>Easy</p>
+                  </div>
+                  <div className="puz">
+                    <img src="/puzzle.svg" alt="Puzzle" />
+                    <p>Sum it up</p>
+                    <p>Easy</p>
+                  </div>
+                  <div className="puz">
+                    <img src="/puzzle.svg" alt="Puzzle" />
+                    <p>Sum it up</p>
+                    <p>Easy</p>
+                  </div>
+                  <div className="puz">
+                    <img src="/puzzle.svg" alt="Puzzle" />
+                    <p>Sum it up</p>
+                    <p>Easy</p>
+                  </div>
+                  <div className="puz">
+                    <img src="/puzzle.svg" alt="Puzzle" />
+                    <p>Sum it up</p>
+                    <p>Easy</p>
+                  </div>
+                </div>
+              </div>
+
+              <img src="/code.svg"></img>
+            </div>
+            <div className="right">
+              <div className="search-container">
+                <img
+                  src="/search.svg"
+                  alt="search icon"
+                  className="search-icon"
+                />
+                <input
+                  type="text"
+                  className="search-input"
+                  placeholder="Search"
+                />
+              </div>
+              <div className="puzzle">
+                <div className="Bfilter">
+                  <p>All problems</p>
+
+                  <div className="filter">
+                    <p>Filter</p>
+                    <img src="/filter.svg"></img>
+                  </div>
+                </div>
+
+                <div className="Status">
+                  <div className="Status_row">
+                    <div>
+                      {" "}
+                      <p>Status</p>
+                    </div>
+                    <div>
+                      {" "}
+                      <p>Problem</p>
+                    </div>
+                    <div>
+                      {" "}
+                      <p>Language</p>
+                    </div>
+                    <div>
+                      {" "}
+                      <p>Difficulty</p>
+                    </div>
+                  </div>
+                  <div className="status_col">
+                    <div>
+                      <img src="/check.svg"></img>
+                    </div>
+                    <p>Sum it up</p>
+                    <div className="py">
+                      <img src="/python.svg"></img>
+                      <p>Python</p>
+                    </div>
+                    <p>Easy</p>
+                  </div>
+                  <div className="status_col">
+                    <div>
+                      <img src="/check.svg"></img>
+                    </div>
+                    <p>Sum it up</p>
+                    <div className="py">
+                      <img src="/python.svg"></img>
+                      <p>Python</p>
+                    </div>
+                    <p>Easy</p>
+                  </div>
+                  <div className="status_col">
+                    <div>
+                      <img src="/check.svg"></img>
+                    </div>
+                    <p>Sum it up</p>
+                    <div className="py">
+                      <img src="/python.svg"></img>
+                      <p>Python</p>
+                    </div>
+                    <p>Easy</p>
+                  </div>
+                  <div className="status_col">
+                    <div>
+                      <img src="/check.svg"></img>
+                    </div>
+                    <p>Sum it up</p>
+                    <div className="py">
+                      <img src="/python.svg"></img>
+                      <p>Python</p>
+                    </div>
+                    <p>Easy</p>
+                  </div>
+                  <div className="status_col">
+                    <div>
+                      <img src="/check.svg"></img>
+                    </div>
+                    <p>Sum it up</p>
+                    <div className="py">
+                      <img src="/python.svg"></img>
+                      <p>Python</p>
+                    </div>
+                    <p>Easy</p>
+                  </div>
+                  <div className="status_col">
+                    <div>
+                      <img src="/check.svg"></img>
+                    </div>
+                    <p>Sum it up</p>
+                    <div className="py">
+                      <img src="/python.svg"></img>
+                      <p>Python</p>
+                    </div>
+                    <p>Easy</p>
+                  </div>
+                  <div className="status_col">
+                    <div>
+                      <img src="/check.svg"></img>
+                    </div>
+                    <p>Sum it up</p>
+                    <div className="py">
+                      <img src="/python.svg"></img>
+                      <p>Python</p>
+                    </div>
+                    <p>Easy</p>
+                  </div>
+                  <div className="status_col">
+                    <div>
+                      <img src="/check.svg"></img>
+                    </div>
+                    <p>Sum it up</p>
+                    <div className="py">
+                      <img src="/python.svg"></img>
+                      <p>Python</p>
+                    </div>
+                    <p>Easy</p>
+                  </div>
+                  
+                </div>
+              </div>
+            </div>
           </div>
         )}
       </div>
