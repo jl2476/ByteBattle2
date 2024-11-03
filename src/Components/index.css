@@ -91,18 +91,18 @@
 .bigPuzz {
   width: 280px;
   height: 100%;
-  
+
   display: flex;
   flex-direction: column;
   gap: 20px;
 }
 
-.BigPuzz{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    gap: 10px;
-    padding: 20px;
+.BigPuzz {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 20px;
 }
 
 .puzzles {
@@ -120,84 +120,87 @@
   box-shadow: 0 4.7px 4.7px 4px rgba(188, 169, 254, 0.5); /* BCA9FE with blur and spread */
 }
 
-.puzzles2{
-    width: 1100px;
-    height: 402px;
-    background-color: #b09bfa7a; /* This should work to display the border */
-    box-sizing: border-box; /* Ensures padding and borders are included in width/height */
-    border-radius: 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 20px;
-    padding: 10px;
-    align-items: center;
-    color:white;
-    /* Add drop shadow */
-    box-shadow: 0 4.7px 4.7px 4px rgba(188, 169, 254, 0.5); /* BCA9FE with blur and spread */
+.puzzles2 {
+  width: 1100px;
+  height: 402px;
+  background-color: #b09bfa7a; /* This should work to display the border */
+  box-sizing: border-box; /* Ensures padding and borders are included in width/height */
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 20px;
+  padding: 10px;
+  align-items: center;
+  color: white;
+  /* Add drop shadow */
+  box-shadow: 0 4.7px 4.7px 4px rgba(188, 169, 254, 0.5); /* BCA9FE with blur and spread */
 }
 
 .play {
-    width: 200px;
-    height: 50px;
-    border-radius: 10px;
-    background: linear-gradient(135deg, #4E76D0, #6D39CF); /* Linear gradient from left to right */
-    font-size: 24px;
+  width: 200px;
+  height: 50px;
+  border-radius: 10px;
+  background: linear-gradient(
+    135deg,
+    #4e76d0,
+    #6d39cf
+  ); /* Linear gradient from left to right */
+  font-size: 24px;
 }
 
-.code{
-    font-family: 'Inter', sans-serif; 
-    font-weight: 600;
-    font-size: 100px;
+.code {
+  font-family: "Inter", sans-serif;
+  font-weight: 600;
+  font-size: 100px;
 }
 
 .code2 {
-    font-family: 'Inter', sans-serif; 
-    font-size: 30px;
-    width: 900px;
-    display: flex;
-    align-items: center;  /* Vertically centers the content */
-    justify-content: center; /* Horizontally centers the content */
-    text-align: center; /* Centers text in the flex item */
+  font-family: "Inter", sans-serif;
+  font-size: 30px;
+  width: 900px;
+  display: flex;
+  align-items: center; /* Vertically centers the content */
+  justify-content: center; /* Horizontally centers the content */
+  text-align: center; /* Centers text in the flex item */
 }
 
-
-.puzzles3{
-    width: 300px;
-    height: 402px;
-    background-color: #b09bfa7a; /* This should work to display the border */
-    box-sizing: border-box; /* Ensures padding and borders are included in width/height */
-    border-radius: 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 20px;
-    padding: 10px;
-    /* Add drop shadow */
-    box-shadow: 0 4.7px 4.7px 4px rgba(188, 169, 254, 0.5); /* BCA9FE with blur and spread */
+.puzzles3 {
+  width: 300px;
+  height: 402px;
+  background-color: #b09bfa7a; /* This should work to display the border */
+  box-sizing: border-box; /* Ensures padding and borders are included in width/height */
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 20px;
+  padding: 10px;
+  /* Add drop shadow */
+  box-shadow: 0 4.7px 4.7px 4px rgba(188, 169, 254, 0.5); /* BCA9FE with blur and spread */
 }
 
-.puzzles4{
-    width: 1100px;
-    height: 402px;
-    background-color: #b09bfa7a; /* This should work to display the border */
-    box-sizing: border-box; /* Ensures padding and borders are included in width/height */
-    border-radius: 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 20px;
-    padding: 20px;
-    align-items: left;
-    color:white;
-    /* Add drop shadow */
-    box-shadow: 0 4.7px 4.7px 4px rgba(188, 169, 254, 0.5); /* BCA9FE with blur and spread */
+.puzzles4 {
+  width: 1100px;
+  height: 402px;
+  background-color: #b09bfa7a; /* This should work to display the border */
+  box-sizing: border-box; /* Ensures padding and borders are included in width/height */
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 20px;
+  padding: 20px;
+  align-items: left;
+  color: white;
+  /* Add drop shadow */
+  box-shadow: 0 4.7px 4.7px 4px rgba(188, 169, 254, 0.5); /* BCA9FE with blur and spread */
 }
 
-.midPuzz{
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
+.midPuzz {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
 .puz {
@@ -261,14 +264,85 @@
   display: block; /* Show the dropdown on hover */
 }
 
-.drop{
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
+.drop {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
 }
 
-.leaderboard{
+.leaderboard {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.form-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000; /* Ensure it's above other elements */
+}
+
+.sign-in-form {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  width: 300px; /* Adjust as needed */
+  position: relative; /* Needed for positioning close button */
+}
+
+.close-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+}
+
+input[type="email"],
+input[type="password"] {
+  width: 100%; /* Make inputs full width */
+  padding: 10px; /* Add some padding */
+  margin-top: 5px; /* Space between label and input */
+  margin-bottom: 15px; /* Space below the input */
+  border: 1px solid #ccc; /* Light gray border */
+  border-radius: 4px; /* Rounded corners */
+  box-shadow: none; /* Remove default shadow */
+  transition: border-color 0.3s; /* Smooth transition on focus */
+}
+
+input[type="email"]:focus,
+input[type="password"]:focus {
+  border-color: #007bff; /* Change border color on focus */
+  outline: none; /* Remove default outline */
+}
+
+.signIn{
     display: flex;
-    flex-direction: row;
-    justify-content: space-around;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.submit{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 40px;
+    border: 1px solid black;
+}
+
+.submit:hover{
+    background-color: black;
+    color: white;
 }

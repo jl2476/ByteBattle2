@@ -3,6 +3,45 @@ import React, { useState } from "react";
 import Link from "next/link"; // Import Link from Next.js
 import "./index.css";
 
+const SignInForm = ({ onClose }) => {
+  const [isRegister, setIsRegister] = useState(false); // State to toggle between Sign In and Register
+
+  const toggleForm = () => {
+    setIsRegister(!isRegister);
+  };
+
+  return (
+    <div className="sign-in-form">
+      <button className="close-button" onClick={onClose} aria-label="Close">
+        &times; {/* Close symbol */}
+      </button>
+      <div className="signIn">
+        <h2>{isRegister ? 'Register' : 'Sign In'}</h2>
+        <form>
+          <label htmlFor="email">Email:</label>
+          <input type="email" id="email" required />
+          
+          <label htmlFor="password">Password:</label>
+          <input type="password" id="password" required />
+          
+          {isRegister && (
+            <>
+              <label htmlFor="confirmPassword">Confirm Password:</label>
+              <input type="password" id="confirmPassword" required />
+            </>
+          )}
+          
+          <button type="submit" className="submit">{isRegister ? 'Register' : 'Submit'}</button>
+        </form>
+        <p onClick={toggleForm} style={{ cursor: 'pointer', color: '#007bff' }}>
+          {isRegister ? 'Already have an account? Sign In' : 'Don’t have an account? Register'}
+        </p>
+      </div>
+    </div>
+  );
+};
+
+
 const Nav = () => {
   // State to manage the active link and content
   const [activeLink, setActiveLink] = useState("/");
@@ -19,6 +58,8 @@ const Nav = () => {
   const toggleDropdown = (index) => {
     setOpenDropdown(openDropdown === index ? null : index); // Toggle the dropdown
   };
+
+  const [showSignInForm, setShowSignInForm] = useState(false);
 
   return (
     <div className="nav-container">
@@ -45,11 +86,20 @@ const Nav = () => {
             Puzzle
           </Link>
         </div>
-        <button className="container3">
+        <button className="container3" onClick={() => setShowSignInForm(true)}>
           <img src="/profile.svg" alt="Profile" />
           Sign in/Register
         </button>
       </div>
+
+
+      {/* Render the SignInForm when showSignInForm is true */}
+      {showSignInForm && (
+        <div className="form-overlay">
+          <SignInForm onClose={() => setShowSignInForm(false)} />
+        </div>
+      )}
+
       {/* Conditional rendering based on active link */}
       <div className="">
         {activeLink === "/" ? (
@@ -144,7 +194,11 @@ const Nav = () => {
               </div>
             </div>
             <div className="midPuzz">
-              <div className="puzzles3"></div>
+              <div className="puzzles3">
+                <div className="profile">
+                    <img src="/profile.svg"></img>
+                </div>
+              </div>
               <div className="puzzles3"></div>
             </div>
           </div>
