@@ -4,21 +4,13 @@ import { useRouter } from "next/navigation"; // Use Next.js router
 import brandingLogo from "@/app/components/logo.png";
 import "./index.css";
 
-import { makeStyles, createStyles } from "@mui/styles";
+import { StylesProvider, makeStyles, createStyles, createGenerateClassName } from "@mui/styles";
 import { ThemeProvider } from "@mui/material/styles";
+
 import { darkTheme } from "@/app/components/MaterialTheming";
 import EditorBody from "@/app/components/editor-component";
-import PropTypes from 'prop-types';
-
-import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { ref, onValue, set, Database } from "firebase/database";
-import { db, app } from "@/utils/firebase"; // Import Firebase app
 
 
-
-import Nav from "@/pages/home/index";
-import { Console } from "console";
-console.log(db)
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -59,61 +51,32 @@ const useStyles = makeStyles(() =>
 
 const Editor = () => {
   const classes = useStyles();
-  const router = useRouter();
-  const [editorID, setEditorID] = useState("");
-  const [code, setCode] = useState("");
-  const [isOwner, setIsOwner] = useState(false);
-  const auth = getAuth(app);
   
-  console.log(`CodeX/${editorID}`);
 
-  useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
-      if (!user) {
-        setIsOwner(false);
-        console.log("user is signed off");
-        //router.push("/login");
-      }
-      if (user) {
-        console.log("user is signed in");
-        setEditorID(user.uid);
-        setIsOwner(true);
-      }
-
-    });
-  }, [auth]);
-
-  type EditorBodyProps = {
-    storeAt: string;
-    Owner: boolean;
-    db: Database;
-  };
+  const generateClassName = createGenerateClassName({
+    productionPrefix: 'editor', 
+  });
+  
 
   return (
-    <ThemeProvider theme={darkTheme}>
-      <div className={classes.editorPage}>
+    <StylesProvider generateClassName={generateClassName}>
+      <ThemeProvider theme={darkTheme}>
+        <div className={classes.editorPage}>
 
-        <div className={classes.header}>
-          <img
-            className={classes.brandingLogo}
-            src={brandingLogo.src}
-            alt="branding-logo"
-            style={{ width: "100px", height: "auto" }} // Adjust size here
-          />
-          <input
-            value={code}
-            onChange={(e) => setCode(e.target.value)}
-            className={classes.codeTitle}
-            spellCheck={false}
-            readOnly={!isOwner}
-          />
+          <div className={classes.header}>
+            <img
+              className={classes.brandingLogo}
+              src={brandingLogo.src}
+              alt="branding-logo"
+              style={{ width: "100px", height: "auto" }} // Adjust size here
+            />
+          </div>
+          
+          {/* Pass editorID as the unique identifier to store code content */}
+          <EditorBody />
         </div>
-        
-        {/* Pass editorID as the unique identifier to store code content */}
-        <EditorBody storeAt={`CodeX/${editorID}`} Owner={isOwner} db={db} />
-      </div>
-    </ThemeProvider>
-  );
+      </ThemeProvider>
+    </StylesProvider>);
 };
 
 export default Editor;

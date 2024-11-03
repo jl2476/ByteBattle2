@@ -12,8 +12,6 @@ import "ace-builds/src-noconflict/mode-ruby";
 import "ace-builds/src-noconflict/mode-kotlin";
 import "ace-builds/src-noconflict/mode-swift";
 
-import PropTypes from "prop-types";
-
 import {
   Button,
   TextField,
@@ -25,11 +23,12 @@ import {
 } from "@mui/material";
 import { ThemeProvider } from "@mui/material/styles";
 import { darkTheme } from "@/app/components/MaterialTheming";
-import { getDatabase, ref, set, onValue, Database } from "firebase/database";
-import { app, auth } from "@/utils/firebase";
+import { ref, set, onValue } from "firebase/database";
+import { auth, db } from "@/utils/firebase";
 import axios from "axios";
 import PlayArrowRoundedIcon from "@mui/icons-material/PlayArrowRounded";
 import { makeStyles, createStyles } from "@mui/styles";
+
 import { onAuthStateChanged } from "firebase/auth";
 
 const useStyles = makeStyles((theme) =>
@@ -128,26 +127,50 @@ const useStyles = makeStyles((theme) =>
     },
   })
 );
-const db = getDatabase(app);
-console.log(db)
-const EditorBody = (storeAt, Owner, db) => {
+
+const EditorBody = () => {
   const classes = useStyles();
   const [codeFontSize, setCodeFontSize] = useState(16);
-  const [showLoader, setShowLoader] = useState(true);
+  //const [showLoader, setShowLoader] = useState(true);
   const [lang, setLang] = useState("");
   const [editorLanguage, setEditorLanguage] = useState("python");
   const [code, setCode] = useState("");
   const [outputValue, setOutputValue] = useState("");
-  const [takeInput, setTakeInput] = useState(false);
   const [executing, setExecuting] = useState(false);
-  const [input, setInput] = useState("");
+  const input = "";
+
+  const [isOwner, setIsOwner] = useState(false);
+  //const router = useRouter();
+  const [editorID, setEditorID] = useState("");
+  
+
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (!user) {
+        setIsOwner(false);
+        console.log("user is signed off");
+        //router.push("/login");
+        
+      }
+      if (user) {
+        console.log("user is signed in");
+        setEditorID(user.uid);
+        setIsOwner(true);
+      }
+
+    });
+  }, [auth]);
  
 
   useEffect(() => {
     if (lang) {
       setEditorLanguage(lang); // Set editor language state
       
-      const langRef = ref(db, `${storeAt}/language`); // Reference to language path in database
+      console.log(db);
+
+      const langRef = ref(db, `${editorID}/language`);
+
+      console.log(langRef)
   
       // Update language in database if it changes
       set(langRef, lang)
@@ -169,14 +192,13 @@ const EditorBody = (storeAt, Owner, db) => {
       // Cleanup listener on component unmount
       return () => unsubscribe();
     }
-  }, [lang, storeAt]); // Dependencies: lang and storeAt
+  }, [lang, editorID]); 
 
-  
 
 
   useEffect(() => {
     if (code.trim()) {
-      const codeRef = ref(db, `${storeAt}/code`);
+      const codeRef = ref(db, `${editorID}/code`);
       set(codeRef, code)
       .then(() => {
         console.log("Code successfully stored in the database.");
@@ -185,12 +207,11 @@ const EditorBody = (storeAt, Owner, db) => {
         console.error("Error storing code:", error);
       });
     }
-  }, [code, storeAt]);
+  }, [code, editorID]);
 
 
   const createExecutionRequest = () => {
     setExecuting(true);
-    setTakeInput(false);
 
     axios
       .post("https://api.codex.jaagrav.in", { code: code, language: editorLanguage, input: input })
@@ -201,9 +222,6 @@ const EditorBody = (storeAt, Owner, db) => {
       .catch(() => {
         setOutputValue("Network Error");
       });
-
-      setExecuting(false);
-      setTakeInput(true);
   };
 
   const SelectLanguage = () => {
@@ -230,10 +248,6 @@ const EditorBody = (storeAt, Owner, db) => {
 
   return (
     <ThemeProvider theme={darkTheme}>
-      <Backdrop className={classes.backdrop} open={showLoader}>
-        <CircularProgress color="primary" />
-      </Backdrop>
-      
         <div className={classes.inputModal} onClick={(e) => e.stopPropagation()}>
           <span>Input</span>
           <Button
@@ -251,36 +265,30 @@ const EditorBody = (storeAt, Owner, db) => {
         <AceEditor
           mode= {editorLanguage}
           theme="dracula"
-          onChange={setInput} // Update `input` state with AceEditor content
-          value={input}
+          onChange={setCode}
+          value={code}
           setOptions={{
             enableBasicAutocompletion: true,
             enableLiveAutocompletion: true,
             enableSnippets: true,
-            fontSize: 16, // Adjust as needed
+            fontSize: codeFontSize,
             showPrintMargin: false,
           }}
-          width="100%" // Set to fill width of parent container
-          height="200px" // Set height or use rows equivalent
+          width="100%" 
+          height="200px" 
           className={classes.modalInput}
         />
-        <div className={classes.output}>
+          <div className={classes.output}>
           <div className={classes.outputTitle}>Output</div>
           <div className={classes.outputTerminal}>{outputValue}</div>
           <div className={classes.runPanel}>
-            <SelectLanguage />
-            {executing && <LinearProgress size={14} className={classes.buttonProgress} />}
+          <SelectLanguage />
+          {executing && <LinearProgress size={14} className={classes.buttonProgress} />}
           </div>
         </div>
       </div>
     </ThemeProvider>
   );
 }
-
-EditorBody.propTypes = {
-  storeAt: PropTypes.string.isRequired, // storeAt should be a string
-  Owner: PropTypes.bool.isRequired,     // Owner should be a boolean
-  db: PropTypes.object.isRequired       // db should be an object (Firebase database instance)
-};
 
 export default EditorBody;
