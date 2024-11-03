@@ -1,22 +1,155 @@
 "use client"; // Required for Next.js components that use client-side features
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import { auth } from '../utils/firebase'; // Make sure this path is correct
+import { signInWithEmailAndPassword, sendPasswordResetEmail, createUserWithEmailAndPassword, onAuthStateChanged, signOut } from 'firebase/auth';
+import { FirebaseError } from 'firebase/app';
 import Link from "next/link"; // Import Link from Next.js
 import "./index.css";
-import { useNavigate } from "react-router-dom";
-import CountdownPlayButton from "./CountdownPlayButton";
+import {
+  getFirestore,
+  doc,
+  setDoc,
+} from 'firebase/firestore';
 
 const SignInForm = ({ onClose }) => {
   const [isRegister, setIsRegister] = useState(false);
   const [isResetPassword, setIsResetPassword] = useState(false); // State for reset password mode
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+  const [message, setMessage] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [username, setUsername] = useState('');
+  const db = getFirestore();
 
-  const toggleForm = () => {
+  const handleRegister = async (e: React.FormEvent<HTMLFormElement>) => {
     setIsRegister(!isRegister);
     setIsResetPassword(false); // Reset to avoid conflict with reset password mode
+
+    e.preventDefault();
+    setIsLoading(true);
+    setErrorMessage('');
+
+    try {
+      // Create user with email and password
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+  
+      // Store additional user info in Firestore
+      await setDoc(doc(db, 'users', user.uid), {
+        username: username,
+        email: email,
+      });
+  
+      console.log('User registered successfully:', username, email);
+      // Redirect or show success message
+    } catch (error) {
+      console.error('Registration error:', error);
+ 
+      if (error instanceof FirebaseError) {
+        switch (error.code) {
+          case 'auth/weak-password':
+            setErrorMessage('Password should be at least 6 characters.');
+            break;
+          case 'auth/email-already-in-use':
+            setErrorMessage('This email is already registered. Please log in or use a different email.');
+            break;
+          case 'auth/invalid-email':
+            setErrorMessage('The email address is not valid.');
+            break;
+          default:
+            setErrorMessage('An error occurred during registration. Please try again.');
+        }
+      } else {
+        setErrorMessage('An unknown error occurred.');
+      }
+    } 
+    finally {
+      setIsLoading(false); // Reset loading state
+    }
+
   };
 
-  const handleResetPassword = () => {
+  const handleSignIn = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setIsLoading(true);
+
+    try {
+      // Sign in using email and password
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+
+      console.log('User logged in successfully:', user);
+    } catch (error) {
+      console.error('Login error:', error);
+      if (error instanceof FirebaseError) {
+        switch(error.code){
+            case 'auth/invalid-email':
+            setErrorMessage('Invalid email format.');
+            break;
+            case 'auth/user-disabled':
+            setErrorMessage('This account has been disabled.');
+            break;
+            case 'auth/user-not-found':
+            setErrorMessage('No user found with this email.');
+            break;
+            case 'auth/wrong-password':
+            setErrorMessage('Incorrect password.');
+            break;
+            case 'auth/too-many-requests':
+            setErrorMessage('Too many login attempts. Please try again later.');
+            break;
+            case 'auth/network-request-failed':
+            setErrorMessage('Network error. Please check your internet connection.');
+            break;
+            case 'auth/internal-error':
+            setErrorMessage('An error occurred. Please try again.');
+            break;
+            case 'auth/operation-not-allowed':
+            setErrorMessage('Sign-in with email/password is disabled.');
+            break;
+            case 'auth/invalid-api-key':
+            setErrorMessage('Invalid API key. Please check your configuration.');
+            break;
+            case 'auth/invalid-credential':
+            setErrorMessage('Invalid credentials. Please check your email/password again.');
+            break;
+            default:
+                setErrorMessage('An unexpected error occurred.');
+        }
+      } 
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleResetPassword = async (e: React.FormEvent<HTMLFormElement>) => {
     setIsResetPassword(true);
     setIsRegister(false); // Ensure we're not in register mode
+
+    e.preventDefault();
+    setIsLoading(true);
+    setErrorMessage('');
+    setMessage('');
+
+    try {
+      await sendPasswordResetEmail(auth, email);
+      setMessage('Password reset email sent! Check your inbox.');
+    } catch (error) {
+      console.error('Password reset error:', error);
+      if (error instanceof FirebaseError) {
+        switch(error.code){
+          case 'auth/user-not-found':
+            setErrorMessage('No user found with this email.');
+          case 'auth/invalid-email':
+            setErrorMessage('Invalid email format.');
+          default:
+            setErrorMessage('Failed to send password reset email. Please try again.');
+        }
+      }
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -25,38 +158,42 @@ const SignInForm = ({ onClose }) => {
         &times; {/* Close symbol */}
       </button>
       <div className="signIn">
-        <h2>
-          {isRegister
-            ? "Register"
-            : isResetPassword
-            ? "Reset Password"
-            : "Sign In"}
-        </h2>
-        <form>
+        <h2> {isRegister ? "Register" : isResetPassword ? "Reset Password" : "Sign In"}</h2>
+        <form onSubmit={isRegister ? handleRegister : isResetPassword ? handleResetPassword : handleSignIn}>
           {isRegister && (
             <div>
               <label htmlFor="username">Username:</label>
-              <input type="text" id="username" required />
+              <input
+              type="text"
+              id="username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              required
+              />
             </div>
           )}
+          <label htmlFor="email">Email:</label>
+          <input
+            type="email"
+            id="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
           {!isResetPassword && (
-            <>
-              <div>
-                <label htmlFor="email">Email:</label>
-                <input type="email" id="email" required />
-              </div>
-              <div>
-                <label htmlFor="password">Password:</label>
-                <input type="password" id="password" required />
-              </div>
-            </>
-          )}
-          {isResetPassword && (
             <div>
-              <label htmlFor="email">Email:</label>
-              <input type="email" id="email" required />
-            </div>
+            <label htmlFor="password">Password:</label>
+            <input
+              type="password"
+              id="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </div>
           )}
+          {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
+          {message && <p style={{ color: 'black' }}>{message}</p>}
 
           <div className="form-buttons">
             {!isRegister && !isResetPassword && (
@@ -92,11 +229,26 @@ const SignInForm = ({ onClose }) => {
 };
 
 const Nav = () => {
-  // State to manage the active link and content
   const [activeLink, setActiveLink] = useState("/");
-
-  // State to manage which dropdown is open
   const [openDropdown, setOpenDropdown] = useState(null);
+  const [showSignInForm, setShowSignInForm] = useState(false);
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+    });
+    return () => unsubscribe(); // Clean up listener on component unmount
+  }, []);
+
+  const handleSignOut = async () => {
+    try {
+      await signOut(auth);
+      setUser(null); // Clear user from state after sign-out
+    } catch (error) {
+      console.error("Error signing out:", error);
+    }
+  };
 
   // Function to handle link click
   const handleLinkClick = (path: string) => {
@@ -107,8 +259,6 @@ const Nav = () => {
   const toggleDropdown = (index) => {
     setOpenDropdown(openDropdown === index ? null : index); // Toggle the dropdown
   };
-
-  const [showSignInForm, setShowSignInForm] = useState(false);
 
   return (
     <div className="nav-container">
@@ -135,12 +285,18 @@ const Nav = () => {
             Puzzle
           </Link>
         </div>
-        <button className="container3" onClick={() => setShowSignInForm(true)}>
-          <img src="/profile.svg" alt="Profile" />
-          Sign in/Register
-        </button>
+        {user ? (
+          <div className="profile-area">
+            <span>{user.displayName || user.email}</span>
+            <button onClick={handleSignOut} className="sign-out-button">Sign Out</button>
+          </div>
+        ) : (
+          <button className="container3" onClick={() => setShowSignInForm(true)}>
+            <img src="/profile.svg" alt="Profile" />
+            Sign In/Register
+          </button>
+        )}
       </div>
-      {/* Render the SignInForm when showSignInForm is true */}
       {showSignInForm && (
         <div className="form-overlay">
           <SignInForm onClose={() => setShowSignInForm(false)} />
@@ -320,3 +476,7 @@ const Nav = () => {
 };
 
 export default Nav;
+function setUser(currentUser: import("@firebase/auth").User | null) {
+  throw new Error("Function not implemented.");
+}
+

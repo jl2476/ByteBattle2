@@ -381,6 +381,15 @@ input[type="password"] {
   gap: 16px;
 }
 
+.sign-in-form input {
+  color: black; /* Set the input text color to black */
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 100%;
+  font-size: 16px;
+}
+
 .submit:hover {
   background-color: black;
   color: white;
