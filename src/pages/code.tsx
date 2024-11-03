@@ -316,6 +316,33 @@ const Code = () => {
     "Content for Test Case 4: More information for case 4.",
   ];
 
+  const [time, setTime] = useState(10 * 60); 
+
+  useEffect(() => {
+    
+    if (time === 5 * 60) {
+      alert("Almost time up!");
+    }
+
+    
+    if (time <= 0) return;
+
+ 
+    const timer = setInterval(() => {
+      setTime((prevTime) => prevTime - 1);
+    }, 1000);
+
+  
+    return () => clearInterval(timer);
+  }, [time]);
+
+
+  const formatTime = (seconds) => {
+    const minutes = Math.floor(seconds / 60);
+    const secondsRemaining = seconds % 60;
+    return `${minutes}:${secondsRemaining < 10 ? '0' : ''}${secondsRemaining}`;
+  };
+
   return (
     <>
       <div className="nav-container">
@@ -338,7 +365,7 @@ const Code = () => {
             </div>
           </div>
           <div className="timer">
-            <p className="timeText">10:00</p>
+          <p className="timeText">{formatTime(time)}</p>
             <button className="prev1">
               <p className="prob">Run</p>
             </button>
@@ -421,49 +448,58 @@ const Code = () => {
         <div className="smallPuzz">
           <div className="puzzles4"></div>
           <div className="puzzles5">
-      <div className="navigation">
-        <button onClick={() => handleSectionClick('testCases')}>Test Cases</button>
-        <button onClick={() => handleSectionClick('terminal')}>Terminal</button>
-      </div>
+            <div className="navigation">
+              <button onClick={() => handleSectionClick("testCases")}>
+                Test Cases
+              </button>
+              <button onClick={() => handleSectionClick("terminal")}>
+                Terminal
+              </button>
+            </div>
 
-      {activeSection === 'testCases' && (
-        <div className="test-cases-section">
-          <p className="test-cases-title">Test Cases</p>
-          <div className="test-case-list">
-            {["Test Case 1", "Test Case 2", "Test Case 3", "Test Case 4"].map(
-              (caseName, index) => (
-                <a
-                  href="#"
-                  key={index}
-                  className={`test-case ${activeIndex === index ? 'active' : ''}`}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    handleTestCaseClick(index);
-                  }}
-                >
-                  {caseName}
-                </a>
-              )
+            {activeSection === "testCases" && (
+              <div className="test-cases-section">
+                <p className="test-cases-title">Test Cases</p>
+                <div className="test-case-list">
+                  {[
+                    "Test Case 1",
+                    "Test Case 2",
+                    "Test Case 3",
+                    "Test Case 4",
+                  ].map((caseName, index) => (
+                    <a
+                      href="#"
+                      key={index}
+                      className={`test-case ${
+                        activeIndex === index ? "active" : ""
+                      }`}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        handleTestCaseClick(index);
+                      }}
+                    >
+                      {caseName}
+                    </a>
+                  ))}
+                </div>
+
+                {activeIndex !== null && (
+                  <div className="test-case-content">
+                    <p>{testCaseContent[activeIndex]}</p>
+                  </div>
+                )}
+              </div>
+            )}
+
+            {activeSection === "terminal" && (
+              <div className="terminal-section">
+                <p>Terminal Output</p>
+                <div className="terminal-content">
+                  <p>Output will be displayed here...</p>
+                </div>
+              </div>
             )}
           </div>
-
-          {activeIndex !== null && (
-            <div className="test-case-content">
-              <p>{testCaseContent[activeIndex]}</p>
-            </div>
-          )}
-        </div>
-      )}
-
-      {activeSection === 'terminal' && (
-        <div className="terminal-section">
-          <p>Terminal Output</p>
-          <div className="terminal-content">
-            <p>Output will be displayed here...</p>
-          </div>
-        </div>
-      )}
-    </div>
         </div>
       </div>
     </>

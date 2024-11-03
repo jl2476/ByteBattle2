@@ -284,6 +284,10 @@ border: none;
   margin-left: 5px; 
 }
 
+.para{
+  font-size: 25px;
+}
+
 .dropdown-content {
   display: none;
   position: relative;
