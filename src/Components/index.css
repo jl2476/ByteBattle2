@@ -280,7 +280,7 @@ border: none; /* Optional: Remove any default borders */
 .leaderboard {
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: space-between;
 }
 
 .form-overlay {
