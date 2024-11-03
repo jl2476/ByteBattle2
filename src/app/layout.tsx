@@ -1,6 +1,6 @@
 // app/layout.js or app/layout.tsx
 import './globals.css'; // Import global CSS here
-import Header from '../Components/Nav'; // Import Header if it should be persistent
+import Header from '@/pages/home'; // Import Header if it should be persistent
 
 export const metadata = {
   title: 'Your Website Title',

@@ -1,5 +1,4 @@
 "use client";
-
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation"; // Use Next.js router
 import brandingLogo from "@/app/components/logo.png";
@@ -8,13 +7,18 @@ import "./index.css";
 import { makeStyles, createStyles } from "@mui/styles";
 import { ThemeProvider } from "@mui/material/styles";
 import { darkTheme } from "@/app/components/MaterialTheming";
-
 import EditorBody from "@/app/components/editor-component";
+import PropTypes from 'prop-types';
 
-import { getDatabase, ref, get, set } from "firebase/database";
-import { app, auth } from "@/utils/firebase"; // Import Firebase app
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { ref, onValue, set } from "firebase/database";
+import { db, app } from "@/utils/firebase"; // Import Firebase app
 
-import { onAuthStateChanged } from "firebase/auth";
+
+
+import Nav from "@/pages/home/index";
+import { Console } from "console";
+console.log(db)
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -52,66 +56,55 @@ const useStyles = makeStyles(() =>
     },
   })
 );
+
 const Editor = () => {
   const classes = useStyles();
   const router = useRouter();
-  const [editorID] = useState("1000"); // Example editorID, replace as necessary
-  const [className, setClassName] = useState("");
-  const [Owner, setOwner] = useState(false);
+  const [editorID, setEditorID] = useState("");
+  const [code, setCode] = useState("");
+  const [isOwner, setIsOwner] = useState(false);
+  const auth = getAuth(app);
+  
+  console.log(`CodeX/${editorID}`);
 
   useEffect(() => {
-    const db = getDatabase(app);
-
-    // Auth State Changed
     onAuthStateChanged(auth, (user) => {
-      if (user) {
-        const ownershipRef = ref(db, `CodeX/${editorID}/owner`);
-        get(ownershipRef).then((snapshot) => {
-          const ownerId = snapshot.val();
-          setOwner(ownerId === user.uid); // Set true if user is owner
-        });
+      if (!user) {
+        setIsOwner(false);
+        console.log("user is signed off");
+        //router.push("/login");
       }
+      if (user) {
+        console.log("user is signed in");
+        setEditorID(user.uid);
+        setIsOwner(true);
+      }
+
     });
-
-    // Fetch className from Firebase
-    const classRef = ref(db, `CodeX/${editorID}/className`);
-    get(classRef)
-      .then((snapshot) => {
-        if (snapshot.exists()) {
-          setClassName(snapshot.val());
-        } else {
-          console.warn("Class name not found in Firebase.");
-        }
-      })
-      .catch((error) => {
-        console.error("Error fetching class name:", error);
-      });
-  }, [editorID]);
-
-  useEffect(() => {
-    const db = getDatabase(app);
-
-    if (className.trim() && Owner) {
-      const classRef = ref(db, `CodeX/${editorID}/code`);
-      set(classRef, className)
-        .then(() => console.log("Class name updated in Firebase."))
-        .catch((error) => console.error("Error updating class name:", error));
-    }
-  }, [className, editorID, Owner]);
+  }, [auth]);
 
   return (
     <ThemeProvider theme={darkTheme}>
       <div className={classes.editorPage}>
+
         <div className={classes.header}>
+          <img
+            className={classes.brandingLogo}
+            src={brandingLogo.src}
+            alt="branding-logo"
+            style={{ width: "100px", height: "auto" }} // Adjust size here
+          />
           <input
-            value={className}
-            onChange={(e) => setClassName(e.target.value)}
+            value={code}
+            onChange={(e) => setCode(e.target.value)}
             className={classes.codeTitle}
             spellCheck={false}
-            readOnly={!Owner}
+            readOnly={!isOwner}
           />
         </div>
-        <EditorBody storeAt={`CodeX/${editorID}`} Owner={Owner} />
+        
+        {/* Pass editorID as the unique identifier to store code content */}
+        <EditorBody storeAt={`CodeX/${editorID}`} Owner={isOwner} db={ db } />
       </div>
     </ThemeProvider>
   );

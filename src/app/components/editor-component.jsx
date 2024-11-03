@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import AceEditor from "react-ace";
+import "ace-builds/src-noconflict/ext-language_tools";
 import "ace-builds/src-noconflict/theme-dracula";
 import "ace-builds/src-noconflict/mode-java";
 import "ace-builds/src-noconflict/mode-c_cpp";
@@ -10,6 +11,8 @@ import "ace-builds/src-noconflict/mode-python";
 import "ace-builds/src-noconflict/mode-ruby";
 import "ace-builds/src-noconflict/mode-kotlin";
 import "ace-builds/src-noconflict/mode-swift";
+
+import PropTypes from "prop-types";
 
 import {
   Button,
@@ -28,7 +31,7 @@ import axios from "axios";
 import PlayArrowRoundedIcon from "@mui/icons-material/PlayArrowRounded";
 import { makeStyles, createStyles } from "@mui/styles";
 import { onAuthStateChanged } from "firebase/auth";
-
+console.log(db)
 const useStyles = makeStyles((theme) =>
   createStyles({
     body: {
@@ -126,121 +129,91 @@ const useStyles = makeStyles((theme) =>
   })
 );
 
-function EditorBody({ storeAt, index }) {
+const EditorBody = (storeAt, Owner, db) => {
   const classes = useStyles();
   const [codeFontSize, setCodeFontSize] = useState(16);
   const [showLoader, setShowLoader] = useState(true);
-  const [lang, selectlang] = useState("");
-  const [editorLanguage, setEditorLanguage] = useState("c_cpp");
+  const [lang, setLang] = useState("");
+  const [editorLanguage, setEditorLanguage] = useState("python");
   const [code, setCode] = useState("");
   const [outputValue, setOutputValue] = useState("");
   const [takeInput, setTakeInput] = useState(false);
   const [executing, setExecuting] = useState(false);
   const [input, setInput] = useState("");
 
-  let notOwner = true;
-
-  function setNotOwner(bool) {
-    notOwner = bool;
-  }
-
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        const userId = user.uid;
+    if (lang) {
+      setEditorLanguage(lang); // Set editor language state
+      
+      const langRef = ref(db, `${storeAt}/language`); // Reference to language path in database
   
-        // Assuming you have a way to fetch the owner UID from Firebase or another source
-        // Example: owner UID is stored in a variable `ownerId` (fetched from Firebase or other storage)
-        const ownerId = "WeeCCz0AUGb1z7QVftaesG2sBlo2"; // replace this with actual fetching logic
+      // Update language in database if it changes
+      set(langRef, lang)
+      .then(() => {
+        console.log("Language successfully stored in the database.");
+      })
+      .catch((error) => {
+        console.error("Error storing language:", error);
+      });
   
-        // Check if the authenticated user's UID matches the stored owner UID
-        if (userId === ownerId) {
-          setNotOwner(false); // The user is the owner
-        } else {
-          setNotOwner(true); // The user is not the owner
+      // Set up a real-time listener for language changes
+      const unsubscribe = onValue(langRef, (snapshot) => {
+        const data = snapshot.val();
+        if (data) {
+          setLang(data); // Update local state with database value if it changes
         }
-      } else {
-        // Redirect to the home or login page if not authenticated
-      }
-    });
+      });
   
-    // Cleanup listener on component unmount
-    return () => unsubscribe();
-  }, [auth]);
-
-  useEffect(() => {
-    const resizeListener = () => {
-      setCodeFontSize(window.innerWidth > 600 ? 20 : 14);
-    };
-    window.addEventListener("resize", resizeListener);
-    resizeListener();
-
-    const db = getDatabase(app);
-    const codeRef = ref(db, storeAt);
-    onValue(codeRef, (snapshot) => {
-      const data = snapshot.val();
-      setShowLoader(false);
-      selectlang(data.language);
-      setCode(data.code);
-    });
-
-    return () => window.removeEventListener("resize", resizeListener);
-  }, []);
-
-  useEffect(() => {
-    if (lang && !notOwner) {
-      const langMap = {
-        cpp: "c_cpp",
-        java: "java",
-        c: "c_cpp",
-        cs: "csharp",
-        rb: "ruby",
-        py: "python",
-        kt: "kotlin",
-        swift: "swift",
-      };
-      setEditorLanguage(langMap[lang] || "c_cpp");
-
-      const db = getDatabase(app);
-      const langRef = ref(db, `${storeAt}/language`);
-      set(langRef, lang);
+      // Cleanup listener on component unmount
+      return () => unsubscribe();
     }
-  }, [lang]);
+  }, [lang, storeAt]); // Dependencies: lang and storeAt
+
+  
+
 
   useEffect(() => {
-    if (code.trim() && !notOwner) {
-      const db = getDatabase(app);
+    if (code.trim()) {
       const codeRef = ref(db, `${storeAt}/code`);
-      set(codeRef, code);
+      set(codeRef, code)
+      .then(() => {
+        console.log("Code successfully stored in the database.");
+      })
+      .catch((error) => {
+        console.error("Error storing code:", error);
+      });
     }
-  }, [code]);
+  }, [code, storeAt]);
+
 
   const createExecutionRequest = () => {
-    setTakeInput(false);
     setExecuting(true);
+    setTakeInput(false);
 
     axios
-      .post("https://api.codex.jaagrav.in", { code, language: lang, input })
+      .post("https://api.codex.jaagrav.in", { code: code, language: editorLanguage, input: input })
       .then((response) => {
         setExecuting(false);
         setOutputValue(response.data.output || response.data.error || "Error");
       })
       .catch(() => {
-        setExecuting(false);
         setOutputValue("Network Error");
       });
+
+      setExecuting(false);
+      setTakeInput(true);
   };
 
-  function SelectLanguage() {
+  const SelectLanguage = () => {
     return (
       <Select
         labelId="language-select-label"
         id="language-select"
         value={lang}
-        onChange={(e) => selectlang(e.target.value)}
+        onChange={(e) => setLang(e.target.value)}
         variant="outlined"
         className={classes.selectlang}
-        disabled={executing || notOwner}
+        disabled={executing}
       >
         <MenuItem value="py">Python3</MenuItem>
         <MenuItem value="c">C</MenuItem>
@@ -258,31 +231,9 @@ function EditorBody({ storeAt, index }) {
       <Backdrop className={classes.backdrop} open={showLoader}>
         <CircularProgress color="primary" />
       </Backdrop>
-      <Backdrop
-        className={classes.backdrop}
-        open={takeInput}
-        onClick={() => {
-          setTakeInput(false);
-          setExecuting(false);
-        }}
-      >
+      
         <div className={classes.inputModal} onClick={(e) => e.stopPropagation()}>
           <span>Input</span>
-          <small>
-            If your code requires an input, please type it below. For multiple inputs, type each
-            input on a new line.
-          </small>
-          <TextField
-            id="input-field"
-            label="STD Input"
-            variant="filled"
-            className={classes.modalInput}
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            spellCheck={false}
-            multiline
-            rows={7}
-          />
           <Button
             variant="contained"
             color="primary"
@@ -293,38 +244,28 @@ function EditorBody({ storeAt, index }) {
             Run
           </Button>
         </div>
-      </Backdrop>
+   
       <div className={classes.body}>
         <AceEditor
-          mode={editorLanguage}
+          mode= {editorLanguage}
           theme="dracula"
-          onChange={setCode}
+          onChange={setInput} // Update `input` state with AceEditor content
+          value={input}
           setOptions={{
             enableBasicAutocompletion: true,
             enableLiveAutocompletion: true,
             enableSnippets: true,
-            fontSize: codeFontSize,
+            fontSize: 16, // Adjust as needed
             showPrintMargin: false,
           }}
-          value={code}
-          className={classes.editor}
-          readOnly={notOwner}
+          width="100%" // Set to fill width of parent container
+          height="200px" // Set height or use rows equivalent
+          className={classes.modalInput}
         />
         <div className={classes.output}>
           <div className={classes.outputTitle}>Output</div>
           <div className={classes.outputTerminal}>{outputValue}</div>
           <div className={classes.runPanel}>
-            <Button
-              size="small"
-              variant="contained"
-              color="primary"
-              className={classes.runBtn}
-              startIcon={<PlayArrowRoundedIcon />}
-              onClick={() => setTakeInput(true)}
-              disabled={executing}
-            >
-              Run
-            </Button>
             <SelectLanguage />
             {executing && <LinearProgress size={14} className={classes.buttonProgress} />}
           </div>
@@ -333,5 +274,11 @@ function EditorBody({ storeAt, index }) {
     </ThemeProvider>
   );
 }
+
+EditorBody.propTypes = {
+  storeAt: PropTypes.string.isRequired, // storeAt should be a string
+  Owner: PropTypes.bool.isRequired,     // Owner should be a boolean
+  db: PropTypes.object.isRequired       // db should be an object (Firebase database instance)
+};
 
 export default EditorBody;
