@@ -457,7 +457,7 @@ const Nav = () => {
             <div className="midPuzz">
               <div className="puzzles3">
                 <div className="profile">
-                  <img src="/profile.svg"></img>
+                  <img src="/continue.png"></img>
                 </div>
               </div>
               <div className="puzzles3">
