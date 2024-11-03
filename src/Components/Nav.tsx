@@ -452,6 +452,60 @@ const Nav = () => {
                   <p>Speed</p>
                   <p>Difficulity</p>
                 </div>
+
+                <div className="Status">
+                  
+                  <div className="status_col">
+                    <div>
+                      <img src="/gold.svg"></img>
+                    </div>
+                    <p>Username</p>
+
+                    <p>10:20:21</p>
+
+                    <p>Easy</p>
+                  </div>
+                  <div className="status_col">
+                    <div>
+                      <img src="/gold.svg"></img>
+                    </div>
+                    <p>Username</p>
+
+                    <p>10:20:21</p>
+
+                    <p>Easy</p>
+                  </div>
+                  <div className="status_col">
+                    <div>
+                      <img src="/gold.svg"></img>
+                    </div>
+                    <p>Username</p>
+
+                    <p>10:20:21</p>
+
+                    <p>Easy</p>
+                  </div>
+                  <div className="status_col">
+                    <div>
+                      <img src="/gold.svg"></img>
+                    </div>
+                    <p>Username</p>
+
+                    <p>10:20:21</p>
+
+                    <p>Easy</p>
+                  </div>
+                  <div className="status_col">
+                    <div>
+                      <img src="/gold.svg"></img>
+                    </div>
+                    <p>Username</p>
+
+                    <p>10:20:21</p>
+
+                    <p>Easy</p>
+                  </div>
+                </div>
               </div>
             </div>
             <div className="midPuzz">
@@ -687,7 +741,6 @@ const Nav = () => {
                     </div>
                     <p>Easy</p>
                   </div>
-                  
                 </div>
               </div>
             </div>
