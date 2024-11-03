@@ -16,6 +16,11 @@
   font-size: 35px;
 }
 
+.all_prob{
+  font-size: 24px;
+  font-weight: 500;
+}
+
 
 .container2 {
   display: flex;
@@ -243,6 +248,18 @@ border: none;
   display: flex;
   justify-content: center;
   color: white;
+  font-size: 24px;
+  font-weight: 500;
+}
+
+.match{
+  font-size: 24px;
+  font-weight: 500;
+}
+
+.leader{
+  font-size: 24px;
+  font-weight: 500;
 }
 
 .dropdown {
@@ -301,6 +318,8 @@ border: none;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  font-weight: 400;
+  font-size: 24px;
 }
 
 .form-overlay {
@@ -560,13 +579,15 @@ h2 {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  width: 100%;
+  width: 95%;
 }
 
 .filter{
   display: flex;
   flex-direction: row;
   gap: 20px;
+  font-weight: 500;
+  font-size: 20px;
 }
 
 .Status{
@@ -581,7 +602,9 @@ h2 {
   flex-direction: row;
   justify-content: space-between;
   width: 100%;
-  gap: 350px;
+  gap: 300px;
+  font-size: 24px;
+  font-weight: 500;
 }
 
 .status_col{

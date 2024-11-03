@@ -443,7 +443,7 @@ const Nav = () => {
                 </div>
               </div>
               <div className="puzzles4">
-                <p>Leaderboard</p>
+                <p className="leader">Leaderboard</p>
 
                 <div className="leaderboard">
                   <p>Rank</p>
@@ -513,7 +513,7 @@ const Nav = () => {
                 </div>
               </div>
               <div className="puzzles3">
-                <p>Match History</p>
+                <p className="match">Match History</p>
                 <div className="history">
                   <p>You</p>
                   <p>VS</p>
@@ -624,7 +624,7 @@ const Nav = () => {
               </div>
               <div className="puzzle">
                 <div className="Bfilter">
-                  <p>All problems</p>
+                  <p className="all_prob">All problems</p>
 
                   <div className="filter">
                     <p>Filter</p>
