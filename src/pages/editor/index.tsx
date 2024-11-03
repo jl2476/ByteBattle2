@@ -1,6 +1,7 @@
-"use client"
+"use client";
+
 import React, { useEffect, useState } from "react";
-import { useRouter, useParams } from "next/navigation"; // Use Next.js router
+import { useRouter } from "next/navigation"; // Use Next.js router
 import brandingLogo from "@/app/components/logo.png";
 import "./index.css";
 
@@ -11,9 +12,9 @@ import { darkTheme } from "@/app/components/MaterialTheming";
 import EditorBody from "@/app/components/editor-component";
 
 import { getDatabase, ref, get, set } from "firebase/database";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { app, auth} from "@/utils/firebase"; // Import Firebase app
-import { edit } from "ace-builds";
+import { app, auth } from "@/utils/firebase"; // Import Firebase app
+
+import { onAuthStateChanged } from "firebase/auth";
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -51,48 +52,50 @@ const useStyles = makeStyles(() =>
     },
   })
 );
-
 const Editor = () => {
   const classes = useStyles();
   const router = useRouter();
-  const [editorID, setEditorID] = useState("1000");
+  const [editorID] = useState("1000"); // Example editorID, replace as necessary
   const [className, setClassName] = useState("");
-  const [Owner, setOwner] = useState(true);
-
-
+  const [Owner, setOwner] = useState(false);
 
   useEffect(() => {
-    const fetchClassName = async () => {
-      const db = getDatabase(app);
-      const classRef = ref(db, `Editor/${editorID}/className`);
+    const db = getDatabase(app);
 
-      try {
-        const snapshot = await get(classRef);
+    // Auth State Changed
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        const ownershipRef = ref(db, `CodeX/${editorID}/owner`);
+        get(ownershipRef).then((snapshot) => {
+          const ownerId = snapshot.val();
+          setOwner(ownerId === user.uid); // Set true if user is owner
+        });
+      }
+    });
+
+    // Fetch className from Firebase
+    const classRef = ref(db, `CodeX/${editorID}/className`);
+    get(classRef)
+      .then((snapshot) => {
         if (snapshot.exists()) {
           setClassName(snapshot.val());
         } else {
           console.warn("Class name not found in Firebase.");
         }
-      } catch (error) {
+      })
+      .catch((error) => {
         console.error("Error fetching class name:", error);
-      }
-    };
-
-    fetchClassName();
+      });
   }, [editorID]);
 
   useEffect(() => {
+    const db = getDatabase(app);
+
     if (className.trim() && Owner) {
-      const db = getDatabase(app);
       const classRef = ref(db, `CodeX/${editorID}/code`);
       set(classRef, className)
-        .then(() => {
-          console.log("Class name updated in Firebase.");
-        })
-        .catch((error) => {
-          console.error("Error updating class name:", error);
-        });
-
+        .then(() => console.log("Class name updated in Firebase."))
+        .catch((error) => console.error("Error updating class name:", error));
     }
   }, [className, editorID, Owner]);
 
@@ -100,24 +103,18 @@ const Editor = () => {
     <ThemeProvider theme={darkTheme}>
       <div className={classes.editorPage}>
         <div className={classes.header}>
-          <img
-            className={classes.brandingLogo}
-            src={brandingLogo.src}
-            alt="branding-logo"
-            onClick={() => router.push("/")} // use Next.js router to navigate
-          />
           <input
             value={className}
             onChange={(e) => setClassName(e.target.value)}
             className={classes.codeTitle}
-            spellCheck={true}
+            spellCheck={false}
             readOnly={!Owner}
           />
         </div>
-        <EditorBody storeAt={`CodeX/${editorID}`} index={editorID} />
+        <EditorBody storeAt={`CodeX/${editorID}`} Owner={Owner} />
       </div>
     </ThemeProvider>
   );
-}
+};
 
 export default Editor;
