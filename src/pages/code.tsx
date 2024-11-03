@@ -1,6 +1,6 @@
 import "./home.css";
 import React, { useEffect, useState } from "react";
-import { auth } from "../utils/firebase"; 
+import { auth } from "../utils/firebase";
 import {
   signInWithEmailAndPassword,
   sendPasswordResetEmail,
@@ -9,13 +9,13 @@ import {
   signOut,
 } from "firebase/auth";
 import { FirebaseError } from "firebase/app";
-import Link from "next/link"; 
+import Link from "next/link";
 import { User } from "firebase/auth";
 import { getFirestore, doc, setDoc } from "firebase/firestore";
 
 const SignInForm = ({ onClose }) => {
   const [isRegister, setIsRegister] = useState(false);
-  const [isResetPassword, setIsResetPassword] = useState(false); 
+  const [isResetPassword, setIsResetPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
@@ -26,14 +26,13 @@ const SignInForm = ({ onClose }) => {
 
   const handleRegister = async (e: React.FormEvent<HTMLFormElement>) => {
     setIsRegister(!isRegister);
-    setIsResetPassword(false); 
+    setIsResetPassword(false);
 
     e.preventDefault();
     setIsLoading(true);
     setErrorMessage("");
 
     try {
-     
       const userCredential = await createUserWithEmailAndPassword(
         auth,
         email,
@@ -41,14 +40,12 @@ const SignInForm = ({ onClose }) => {
       );
       const user = userCredential.user;
 
-    
       await setDoc(doc(db, "users", user.uid), {
         username: username,
         email: email,
       });
 
       console.log("User registered successfully:", username, email);
-     
     } catch (error) {
       console.error("Registration error:", error);
 
@@ -74,7 +71,7 @@ const SignInForm = ({ onClose }) => {
         setErrorMessage("An unknown error occurred.");
       }
     } finally {
-      setIsLoading(false); 
+      setIsLoading(false);
     }
   };
 
@@ -83,7 +80,6 @@ const SignInForm = ({ onClose }) => {
     setIsLoading(true);
 
     try {
-      
       const userCredential = await signInWithEmailAndPassword(
         auth,
         email,
@@ -143,7 +139,7 @@ const SignInForm = ({ onClose }) => {
 
   const handleResetPassword = async (e: React.FormEvent<HTMLFormElement>) => {
     setIsResetPassword(true);
-    setIsRegister(false); 
+    setIsRegister(false);
 
     e.preventDefault();
     setIsLoading(true);
@@ -267,44 +263,42 @@ const Code = () => {
   const [activeLink, setActiveLink] = useState("/");
   const [openDropdown, setOpenDropdown] = useState(null);
   const [showSignInForm, setShowSignInForm] = useState(false);
-  const [user, setUser] = useState<User | null>(null); 
+  const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
     });
-    return () => unsubscribe(); 
+    return () => unsubscribe();
   }, []);
 
   const handleSignOut = async () => {
     try {
       await signOut(auth);
-      setUser(null); 
+      setUser(null);
     } catch (error) {
       console.error("Error signing out:", error);
     }
   };
-
 
   const handleLinkClick = (path) => {
     setActiveLink(path);
   };
 
   const toggleDropdown = (index) => {
-    setOpenDropdown(openDropdown === index ? null : index); 
+    setOpenDropdown(openDropdown === index ? null : index);
   };
-
 
   const handleClick = (section) => {
     setActiveSection(section);
   };
 
-  const [activeSection, setActiveSection] = useState('testCases');
+  const [activeSection, setActiveSection] = useState("testCases");
   const [activeIndex, setActiveIndex] = useState(null);
 
   const handleSectionClick = (section) => {
     setActiveSection(section);
-    if (section === 'testCases') {
+    if (section === "testCases") {
       // Do not reset activeIndex here so the content persists
     } else {
       setActiveIndex(null); // Reset active index when switching to terminal
@@ -314,8 +308,7 @@ const Code = () => {
   const handleTestCaseClick = (index) => {
     setActiveIndex(activeIndex === index ? null : index); // Toggle active test case
   };
-  
- 
+
   const testCaseContent = [
     "Content for Test Case 1: Description or example here.",
     "Content for Test Case 2: Additional details here.",
@@ -428,38 +421,36 @@ const Code = () => {
         <div className="smallPuzz">
           <div className="puzzles4"></div>
           <div className="puzzles5">
-      {/* Navigation Section */}
       <div className="navigation">
         <button onClick={() => handleSectionClick('testCases')}>Test Cases</button>
         <button onClick={() => handleSectionClick('terminal')}>Terminal</button>
       </div>
 
-      {/* Conditional Rendering Based on Active Section */}
       {activeSection === 'testCases' && (
         <div className="test-cases-section">
           <p className="test-cases-title">Test Cases</p>
           <div className="test-case-list">
             {["Test Case 1", "Test Case 2", "Test Case 3", "Test Case 4"].map(
               (caseName, index) => (
-                <span
+                <a
+                  href="#"
                   key={index}
                   className={`test-case ${activeIndex === index ? 'active' : ''}`}
-                  onClick={() => handleTestCaseClick(index)}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleTestCaseClick(index);
+                  }}
                 >
                   {caseName}
-                </span>
+                </a>
               )
             )}
           </div>
 
-          {/* Displaying Content of Active Test Case */}
           {activeIndex !== null && (
-            <>
-              <hr className="separator-line" />
-              <div className="test-case-content">
-                <p>{testCaseContent[activeIndex]}</p>
-              </div>
-            </>
+            <div className="test-case-content">
+              <p>{testCaseContent[activeIndex]}</p>
+            </div>
           )}
         </div>
       )}
