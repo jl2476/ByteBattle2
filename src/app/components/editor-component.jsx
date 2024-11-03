@@ -25,13 +25,13 @@ import {
 } from "@mui/material";
 import { ThemeProvider } from "@mui/material/styles";
 import { darkTheme } from "@/app/components/MaterialTheming";
-import { getDatabase, ref, set, onValue } from "firebase/database";
+import { getDatabase, ref, set, onValue, Database } from "firebase/database";
 import { app, auth } from "@/utils/firebase";
 import axios from "axios";
 import PlayArrowRoundedIcon from "@mui/icons-material/PlayArrowRounded";
 import { makeStyles, createStyles } from "@mui/styles";
 import { onAuthStateChanged } from "firebase/auth";
-console.log(db)
+
 const useStyles = makeStyles((theme) =>
   createStyles({
     body: {
@@ -128,7 +128,8 @@ const useStyles = makeStyles((theme) =>
     },
   })
 );
-
+const db = getDatabase(app);
+console.log(db)
 const EditorBody = (storeAt, Owner, db) => {
   const classes = useStyles();
   const [codeFontSize, setCodeFontSize] = useState(16);
@@ -140,6 +141,7 @@ const EditorBody = (storeAt, Owner, db) => {
   const [takeInput, setTakeInput] = useState(false);
   const [executing, setExecuting] = useState(false);
   const [input, setInput] = useState("");
+ 
 
   useEffect(() => {
     if (lang) {

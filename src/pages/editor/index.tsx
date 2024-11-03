@@ -11,7 +11,7 @@ import EditorBody from "@/app/components/editor-component";
 import PropTypes from 'prop-types';
 
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { ref, onValue, set } from "firebase/database";
+import { ref, onValue, set, Database } from "firebase/database";
 import { db, app } from "@/utils/firebase"; // Import Firebase app
 
 
@@ -83,6 +83,12 @@ const Editor = () => {
     });
   }, [auth]);
 
+  type EditorBodyProps = {
+    storeAt: string;
+    Owner: boolean;
+    db: Database;
+  };
+
   return (
     <ThemeProvider theme={darkTheme}>
       <div className={classes.editorPage}>
@@ -104,7 +110,7 @@ const Editor = () => {
         </div>
         
         {/* Pass editorID as the unique identifier to store code content */}
-        <EditorBody storeAt={`CodeX/${editorID}`} Owner={isOwner} db={ db } />
+        <EditorBody storeAt={`CodeX/${editorID}`} Owner={isOwner} db={db} />
       </div>
     </ThemeProvider>
   );
