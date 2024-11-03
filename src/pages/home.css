@@ -251,6 +251,11 @@ h2 {
   color: white;
 }
 
+.sum{
+    font-weight: 600;
+    font-size: 35px;
+}
+
 .puzzles3 {
   width: 400px;
   height: 800px;
@@ -259,8 +264,7 @@ h2 {
   border-radius: 20px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
+
   gap: 20px;
   color: white;
   padding: 20px;

@@ -369,7 +369,7 @@ const Code = () => {
         <div className="puzzles3">
           {/* left bar */}
           <div className="profile">
-            <p>1: Two Sum</p>
+            <p className="sum">1: Two Sum</p>
             <div className="chall">
               <div className="easy">Easy</div>
               <div className="easy">Python</div>
