@@ -5,7 +5,7 @@ import {
   setDoc,
 } from 'firebase/firestore'
 import React, { useState } from 'react';
-import { auth } from '../utils/firebase'; // Import the Firebase auth
+import { auth } from '@/utils/firebase'; // Import the Firebase auth
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 
 function SignUp() {

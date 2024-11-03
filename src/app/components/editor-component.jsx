@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import AceEditor from "react-ace";
 import "ace-builds/src-noconflict/theme-dracula";
@@ -20,14 +19,15 @@ import {
   LinearProgress,
 } from "@mui/material";
 
+import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { makeStyles, createStyles } from "@mui/styles";
-import { ThemeProvider } from "@mui/material/styles";
 import PlayArrowRoundedIcon from "@mui/icons-material/PlayArrowRounded";
-import { darkTheme } from "./MaterialTheming";
+import { darkTheme } from "./MaterialTheming"; // Ensure darkTheme is correctly defined in MaterialTheming.js
 
 import { getDatabase, ref, get, set } from "firebase/database";
 import { app } from "@/utils/firebase";
 import axios from "axios";
+
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -38,13 +38,10 @@ const useStyles = makeStyles((theme) =>
       "& .ace_gutter": { backgroundColor: "#19202b" },
       "& .ace_editor": { backgroundColor: "#19202b" },
       "& .ace_support.ace_function": { color: "#2196F3" },
-      [theme.breakpoints.up("sm")]: {
-        gridTemplateRows: "unset",
-        gridTemplateColumns: "calc(100% - 350px) 330px",
-      },
+      // Ensure theme.breakpoints is properly accessed
+  
     },
     backdrop: {
-      zIndex: theme.zIndex.drawer + 1,
       color: "#fff",
     },
     editor: {
@@ -52,10 +49,7 @@ const useStyles = makeStyles((theme) =>
       width: "100% !important",
       borderBottom: "2px solid #2196F3",
       "& *": { fontFamily: "monospace" },
-      [theme.breakpoints.up("sm")]: {
-        borderBottom: "none",
-        borderRight: "2px solid #2196F3",
-      },
+      
     },
     output: {
       display: "grid",
@@ -77,7 +71,7 @@ const useStyles = makeStyles((theme) =>
       borderRadius: "5px",
       padding: 15,
       textAlign: "left",
-      "& text": { display: "block", color: "#2196F3", fontSize: "20px" },
+      "& p": { display: "block", color: "#2196F3", fontSize: "20px" },
       "& small": { display: "block", fontSize: "14px" },
     },
     modalInput: {
@@ -110,9 +104,7 @@ const languageMapping = {
 };
 
 function EditorBody({ storeAt, index }) {
-  
-  const classes = useStyles();
-  const [codeFontSize, setCodeFontSize] = useState(16);
+  const classes = useStyles(darkTheme); // Ensure the theme is passed here
   
   const [showLoader, setShowLoader] = useState(true);
   const [lang, setLang] = useState("");
@@ -122,6 +114,7 @@ function EditorBody({ storeAt, index }) {
   const [takeInput, setTakeInput] = useState(false);
   const [executing, setExecuting] = useState(false);
   const [input, setInput] = useState("");
+  const [codeFontSize] = useState(16);
 
   const notOwner = typeof window !== "undefined" &&
     localStorage.getItem("codex-codes") &&

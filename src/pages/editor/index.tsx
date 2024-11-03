@@ -1,17 +1,19 @@
 "use client"
 import React, { useEffect, useState } from "react";
 import { useRouter, useParams } from "next/navigation"; // Use Next.js router
-import brandingLogo from "../components/logo.png";
-import "./editor.css";
+import brandingLogo from "@/app/components/logo.png";
+import "./index.css";
 
 import { makeStyles, createStyles } from "@mui/styles";
 import { ThemeProvider } from "@mui/material/styles";
-import { darkTheme } from "../components/MaterialTheming";
+import { darkTheme } from "@/app/components/MaterialTheming";
 
-import EditorBody from "../components/editor-component";
+import EditorBody from "@/app/components/editor-component";
 
 import { getDatabase, ref, get, set } from "firebase/database";
-import { app } from "@/utils/firebase"; // Import Firebase app
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { app, auth} from "@/utils/firebase"; // Import Firebase app
+import { edit } from "ace-builds";
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -53,39 +55,36 @@ const useStyles = makeStyles(() =>
 const Editor = () => {
   const classes = useStyles();
   const router = useRouter();
-  const { editorID, editorIndex } = useParams();
+  const [editorID, setEditorID] = useState("1000");
   const [className, setClassName] = useState("");
-  const [notOwner, setNotOwner] = useState(false);
+  const [Owner, setOwner] = useState(true);
+
+
 
   useEffect(() => {
-    const db = getDatabase(app);
-    const classRef = ref(db, `CodeX/${editorID}/className`);
-
-    // Fetch className from Firebase
-    get(classRef).then((snapshot) => {
-      if (snapshot.exists()) {
-        setClassName(snapshot.val());
-      } else {
-        console.warn("Class name not found in Firebase.");
-      }
-    }).catch((error) => {
-      console.error("Error fetching class name:", error);
-    });
-
-    const storedCodes = localStorage.getItem("codex-codes");
-    if (storedCodes) {
-      const codesArray = JSON.parse(storedCodes);
-      const index = Number(editorIndex);
-      if (Number.isInteger(index) && codesArray[index]?.key === editorID) {
-        setNotOwner(true);
-      }
-    }
-  }, [editorID, editorIndex]);
-
-  useEffect(() => {
-    if (className.trim() && notOwner) {
+    const fetchClassName = async () => {
       const db = getDatabase(app);
-      const classRef = ref(db, `CodeX/${editorID}/className`);
+      const classRef = ref(db, `Editor/${editorID}/className`);
+
+      try {
+        const snapshot = await get(classRef);
+        if (snapshot.exists()) {
+          setClassName(snapshot.val());
+        } else {
+          console.warn("Class name not found in Firebase.");
+        }
+      } catch (error) {
+        console.error("Error fetching class name:", error);
+      }
+    };
+
+    fetchClassName();
+  }, [editorID]);
+
+  useEffect(() => {
+    if (className.trim() && Owner) {
+      const db = getDatabase(app);
+      const classRef = ref(db, `CodeX/${editorID}/code`);
       set(classRef, className)
         .then(() => {
           console.log("Class name updated in Firebase.");
@@ -94,21 +93,8 @@ const Editor = () => {
           console.error("Error updating class name:", error);
         });
 
-      const storedCodes = localStorage.getItem("codex-codes");
-      if (storedCodes) {
-        const classNames: { name: string; key: string }[] = JSON.parse(storedCodes);
-        const index = Number(editorIndex);
-        if (Number.isInteger(index) && classNames[index]) {
-          if (classNames[Number(editorIndex)]) {
-            if (classNames[index]) {
-              classNames[index].name = className;
-            }
-          }
-          localStorage.setItem("codex-codes", JSON.stringify(classNames));
-        }
-      }
     }
-  }, [className, editorID, editorIndex, notOwner]);
+  }, [className, editorID, Owner]);
 
   return (
     <ThemeProvider theme={darkTheme}>
@@ -124,11 +110,11 @@ const Editor = () => {
             value={className}
             onChange={(e) => setClassName(e.target.value)}
             className={classes.codeTitle}
-            spellCheck={false}
-            readOnly={!notOwner}
+            spellCheck={true}
+            readOnly={!Owner}
           />
         </div>
-        <EditorBody storeAt={`CodeX/${editorID}`} index={editorIndex} />
+        <EditorBody storeAt={`CodeX/${editorID}`} index={editorID} />
       </div>
     </ThemeProvider>
   );
