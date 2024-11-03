@@ -1,0 +1,47 @@
+<div className="container1">
+          <p className="logo">ByteBattle</p>
+          <div className="container2">
+            <Link
+              href="/"
+              className={`home ${activeLink === "/" ? "active" : ""}`}
+              onClick={() => handleLinkClick("/")}
+            >
+              <img src="/home.svg" alt="Home" />
+              Home
+            </Link>
+            <Link
+              href="/puzzle"
+              className={`home ${activeLink === "/puzzle" ? "active" : ""}`}
+              onClick={() => handleLinkClick("/puzzle")}
+            >
+              <img src="/puzzle.svg" alt="Puzzle" />
+              Puzzle
+            </Link>
+          </div>
+          {user ? (
+            <div className="container3">
+              <img src="/profile.svg" alt="Profile" />
+              <div className="user-info">
+                {" "}
+                {/* New container for email and sign-out */}
+                <span>{user.displayName || user.email}</span>
+                <button onClick={handleSignOut} className="sign-out-button">
+                  Sign Out
+                </button>
+              </div>
+            </div>
+          ) : (
+            <button
+              className="container3"
+              onClick={() => setShowSignInForm(true)}
+            >
+              <img src="/profile.svg" alt="Profile" />
+              Sign In/Register
+            </button>
+          )}
+        </div>
+        {showSignInForm && (
+          <div className="form-overlay">
+            <SignInForm onClose={() => setShowSignInForm(false)} />
+          </div>
+        )}

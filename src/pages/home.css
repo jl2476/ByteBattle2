@@ -1,7 +1,371 @@
-.puzzles {
-    width: 234px;
-    height: 402px;
-    border: 1px solid black; /* This should work to display the border */
-    box-sizing: border-box; /* Ensures padding and borders are included in width/height */
-    
+.form-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000; /* Ensure it's above other elements */
+}
+
+.sign-in-form {
+  background-color: #b09bfa;
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  width: 600px; /* Adjust width as needed */
+  min-height: 300px; /* Minimum height for small forms */
+  position: relative; /* Needed for positioning close button */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: height 0.3s ease;
+  gap: 16px;
+  color: white;
+}
+
+.close-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 35px; /* Increase font size */
+  padding: 8px; /* Add padding for a larger clickable area */
+  position: absolute;
+  right: 15px; /* Adjust position */
+  top: 15px;
+  line-height: 1; /* Adjust line height to center the symbol */
+}
+
+.sign-in-form input[type="text"],
+.sign-in-form input[type="email"],
+.sign-in-form input[type="password"] {
+  width: 100%;
+  padding: 8px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  border: 1px solid #ccc; /* Default border color */
+  border-radius: 4px;
+}
+
+.sign-in-form input[type="text"]:focus,
+.sign-in-form input[type="email"]:focus,
+.sign-in-form input[type="password"]:focus {
+  border-color: #007bff; /* Border color on focus */
+  outline: none;
+}
+
+input[type="email"],
+input[type="password"] {
+  width: 100%; /* Make inputs full width */
+  padding: 12px; /* Increase padding for more space */
+  margin-bottom: 15px; /* Space below the input */
+  border: 1px solid #ccc; /* Light gray border */
+  border-radius: 4px; /* Rounded corners */
+  box-shadow: none; /* Remove default shadow */
+  transition: border-color 0.3s; /* Smooth transition on focus */
+}
+
+.signIn {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch; /* Change to stretch to make children full width */
+  gap: 20px; /* Adjust the gap for better spacing */
+}
+.submit {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%; /* Make submit button full width */
+  height: 50px; /* Increase height for a more comfortable button */
+  background: linear-gradient(
+    135deg,
+    #4e76d0,
+    #6d39cf
+  ); /* Linear gradient from left to right */
+  color: white; /* Text color */
+  font-size: 16px; /* Font size for better readability */
+  border-radius: 4px; /* Match with input borders */
+  cursor: pointer; /* Pointer cursor on hover */
+  transition: background-color 0.3s; /* Smooth transition for hover effect */
+}
+
+.form-buttons {
+  display: flex;
+  justify-content: space-between;
+  align-items: left;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.sign-in-form input {
+  color: black; /* Set the input text color to black */
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 100%;
+  font-size: 16px;
+}
+
+.submit:hover {
+  background-color: black;
+  color: white;
+}
+
+h2 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 25px;
+}
+
+.background-image {
+  position: absolute; /* Positioning the image absolutely */
+  top: 0; /* Align to the top */
+  left: 0; /* Align to the left */
+  width: 100%; /* Make it full width */
+  height: auto; /* Maintain aspect ratio */
+  z-index: -1; /* Send the image behind other content */
+}
+
+.container1 {
+  position: relative; /* Ensure other content stays above the image */
+  z-index: 1; /* Bring this content in front of the background image */
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.logo {
+  margin-left: 60px;
+  color: white;
+  font-size: 35px;
+}
+
+.container3 {
+  width: 300px;
+  height: 69px;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+  background-color: #9785f27a;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px; /* Space between icon and user info */
+  box-shadow: none;
+  border: none; /* Optional: Remove any default borders */
+  outline: none; /* Optional: Remove focus outline */
+  cursor: pointer;
+}
+
+.butn {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+.prev {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 150px;
+  height: 29px;
+  background-color: transparent; /* Set default background to transparent */
+  border-radius: 10px;
+  box-shadow: none;
+  border: none; /* Remove any default borders */
+  outline: none; /* Remove focus outline */
+  cursor: pointer;
+  gap: 10px;
+}
+
+.prev:hover {
+  background-color: #9785f288; /* Background color on hover */
+}
+
+.prev1 {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 50px;
+  height: 29px;
+  background-color: #9785f288; /* Set default background to transparent */
+  border-radius: 10px;
+  box-shadow: none;
+  border: none; /* Remove any default borders */
+  outline: none; /* Remove focus outline */
+  cursor: pointer;
+  gap: 10px;
+}
+
+.prev1:hover {
+  background-color: #85f29d88; /* Background color on hover */
+}
+
+.prev2 {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 100px;
+  height: 29px;
+  background-color: #9785f288; /* Set default background to transparent */
+  border-radius: 10px;
+  box-shadow: none;
+  border: none; /* Remove any default borders */
+  outline: none; /* Remove focus outline */
+  cursor: pointer;
+  gap: 10px;
+}
+
+.prev2:hover {
+  background-color: #85f29d88; /* Background color on hover */
+}
+
+.prob {
+  color: white;
+}
+
+.navLeft {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+}
+
+.timer {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+.timeText {
+  color: white;
+}
+
+.puzzles3 {
+  width: 400px;
+  height: 800px;
+  background-color: #b09bfa7a; /* This should work to display the border */
+  box-sizing: border-box; /* Ensures padding and borders are included in width/height */
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  color: white;
+  padding: 20px;
+  /* Add drop shadow */
+  box-shadow: 0 4.7px 4.7px 4px rgba(188, 169, 254, 0.5); /* BCA9FE with blur and spread */
+}
+
+.puzzles4 {
+  width: 1400px;
+  height: 450px;
+  background-color: #b09bfa7a; /* This should work to display the border */
+  box-sizing: border-box; /* Ensures padding and borders are included in width/height */
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  color: white;
+  padding: 20px;
+  /* Add drop shadow */
+  box-shadow: 0 4.7px 4.7px 4px rgba(188, 169, 254, 0.5); /* BCA9FE with blur and spread */
+}
+
+.puzzles5 {
+  width: 1400px;
+  height: 320px;
+  background-color: #b09bfa7a; /* This should work to display the border */
+  box-sizing: border-box; /* Ensures padding and borders are included in width/height */
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  
+  gap: 20px;
+  color: white;
+  padding: 20px;
+  /* Add drop shadow */
+  box-shadow: 0 4.7px 4.7px 4px rgba(188, 169, 254, 0.5); /* BCA9FE with blur and spread */
+}
+
+.easy {
+  width: 100px;
+  height: 25px;
+  background-color: #b09bfa7a; /* This should work to display the border */
+  box-sizing: border-box; /* Ensures padding and borders are included in width/height */
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  color: white;
+  padding: 20px;
+  /* Add drop shadow */
+  box-shadow: 0 4.7px 4.7px 4px rgba(188, 169, 254, 0.5); /* BCA9FE with blur and spread */
+}
+
+.chall {
+  display: flex;
+  flex-direction: row;
+  gap: 30px;
+}
+
+.para {
+  width: 350px;
+}
+
+.bigPuzz {
+  display: flex;
+  flex-direction: row;
+  gap: 30px;
+}
+
+.smallPuzz {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.test {
+  display: flex;
+  flex-direction: row;
+  gap: 30px;
+  align-items: center;
+}
+
+.test-case-container {
+  display: inline-block;
+  cursor: pointer;
+  margin-bottom: 8px; /* Add spacing between test cases */
+}
+
+.test-case {
+  color: white;
+  padding: 8px;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.test-case.clicked {
+  color: white;
+}
+
+.underline {
+  height: 2px;
+  width: 100%;
+  background-color: white;
+  margin-top: 4px;
 }
