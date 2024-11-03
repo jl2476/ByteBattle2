@@ -1,7 +1,9 @@
 "use client"; // Required for Next.js components that use client-side features
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link"; // Import Link from Next.js
 import "./index.css";
+import { useNavigate } from "react-router-dom";
+import CountdownPlayButton from "./CountdownPlayButton";
 
 const SignInForm = ({ onClose }) => {
   const [isRegister, setIsRegister] = useState(false);
@@ -224,7 +226,20 @@ const Nav = () => {
                   Challenge your coding skills in real-time with head to head
                   speed coding matches
                 </p>
-                <button className="play">Play</button>
+                <div>
+                  <button className="play">Play</button>
+                  {/* {isCountingDown ? (
+                    <div className="countdown">
+                      <p>Time left: {formatTime(timeLeft)}</p>
+                    </div>
+                  ) : (
+                    <button className="play" onClick={startCountdown}>
+                      Play
+                    </button>
+
+                  )} */}
+                
+                </div>
               </div>
               <div className="puzzles4">
                 <p>Leaderboard</p>
@@ -243,7 +258,54 @@ const Nav = () => {
                   <img src="/profile.svg"></img>
                 </div>
               </div>
-              <div className="puzzles3"></div>
+              <div className="puzzles3">
+                <p>Match History</p>
+                <div className="history">
+                  <p>You</p>
+                  <p>VS</p>
+                  <p>Someone else</p>
+                  <div className="star">
+                    <p>-3</p>
+                    <img src="/star.svg"></img>
+                  </div>
+                </div>
+                <div className="history">
+                  <p>You</p>
+                  <p>VS</p>
+                  <p>Someone else</p>
+                  <div className="star">
+                    <p>-3</p>
+                    <img src="/star.svg"></img>
+                  </div>
+                </div>
+                <div className="history">
+                  <p>You</p>
+                  <p>VS</p>
+                  <p>Someone else</p>
+                  <div className="star">
+                    <p>-3</p>
+                    <img src="/star.svg"></img>
+                  </div>
+                </div>
+                <div className="history1">
+                  <p>You</p>
+                  <p>VS</p>
+                  <p>Someone else</p>
+                  <div className="star">
+                    <p>-3</p>
+                    <img src="/star.svg"></img>
+                  </div>
+                </div>
+                <div className="history1">
+                  <p>You</p>
+                  <p>VS</p>
+                  <p>Someone else</p>
+                  <div className="star">
+                    <p>-3</p>
+                    <img src="/star.svg"></img>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         ) : (

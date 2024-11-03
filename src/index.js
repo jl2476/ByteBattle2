@@ -1,31 +1,25 @@
+// App.js (or your main component)
 import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import reportWebVitals from './reportWebVitals';
-import {
-  createBrowserRouter,
-  RouterProvider,
-} from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Layout from './Layout';
 import Home from './pages/home';
 import Puzzle from './Components/puzzle';
 
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: '/',
     element: <Layout />,
     children: [
-      { path: "/", element: <Home /> },
-      { path: "/puzzle", element: <Puzzle /> },
+      { path: '/', element: <Home /> },
+      { path: '/puzzle', element: <Puzzle /> },
     ],
   },
 ]);
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
-  <React.StrictMode>
+const App = () => {
+  return (
     <RouterProvider router={router} />
-  </React.StrictMode>
-);
+  );
+};
 
-reportWebVitals();
+export default App;
