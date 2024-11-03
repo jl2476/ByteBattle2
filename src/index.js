@@ -1,25 +1,18 @@
-// App.js (or your main component)
+// Layout.js
 import React from 'react';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import Layout from './Layout';
-import Home from './pages/home';
-import Puzzle from './Components/puzzle';
+import { Outlet, Link } from 'react-router-dom';
 
-const router = createBrowserRouter([
-  {
-    path: '/',
-    element: <Layout />,
-    children: [
-      { path: '/', element: <Home /> },
-      { path: '/puzzle', element: <Puzzle /> },
-    ],
-  },
-]);
-
-const App = () => {
+const Layout = () => {
   return (
-    <RouterProvider router={router} />
+    <div>
+      <nav>
+        <Link to="/">Home</Link> | 
+        <Link to="/puzzle">Puzzle</Link> | 
+        <Link to="/code">Code</Link>
+      </nav>
+      <Outlet /> {/* This renders the child routes */}
+    </div>
   );
 };
 
-export default App;
+export default Layout;

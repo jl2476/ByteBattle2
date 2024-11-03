@@ -441,7 +441,9 @@ const Nav = () => {
                   speed coding matches
                 </p>
                 <div>
-                  <button className="play">Play</button>
+                  <Link href="/code" passHref>
+                    <button className="play">Play</button>
+                  </Link>
                   {/* {isCountingDown ? (
                     <div className="countdown">
                       <p>Time left: {formatTime(timeLeft)}</p>
