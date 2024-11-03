@@ -1,74 +1,401 @@
 .container1 {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    height: 69px;
-    border: 1px solid black;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 69px;
+  border-bottom: 1px solid white;
 }
 
 .logo {
-    margin-left: 60px;
+  margin-left: 60px;
+  color: white;
 }
 
 .container2 {
-    display: flex;
-    flex-direction: row;
-    width: 285px;
-    height: 23px;
-    gap: 109px;
+  display: flex;
+  flex-direction: row;
+  width: 285px;
+  height: 23px;
+  gap: 109px;
 }
 
 .container3 {
-    width: 204px;
-    height: 69px;
-    border-top-left-radius: 10px;
-    border-bottom-left-radius: 10px;
-    background-color: #9785f27a;
-    color: black;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 20px;
+  width: 204px;
+  height: 69px;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+  background-color: #9785f27a;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
 }
 
 .home {
-    display: flex;
-    gap: 10px;
-    position: relative; /* Make the home links relative for positioning */
+  display: flex;
+  gap: 10px;
+  position: relative; /* Make the home links relative for positioning */
 }
 
 .container2 a {
-    text-decoration: none; 
-    color: black; 
-   
-    border-radius: 20px;
+  text-decoration: none;
+  color: white;
+
+  border-radius: 20px;
 }
 
 .container2 a::after {
-    content: ''; /* Creates a pseudo-element */
-    position: absolute;
-    left: 0; /* Align it to the left of the link */
-    right: 0; /* Stretch it to the right */
-    bottom: -20px; /* Adjusted to position just below the link without affecting size */
-    height: 4px; /* Set the thickness of the border */
-    background-color: black; /* Set the border color */
-    transform: scaleX(0); /* Initially hide the border */
-    transition: transform 0.3s ease; /* Smooth transition for the border */
-    border-radius: 20px;
+  content: ""; /* Creates a pseudo-element */
+  position: absolute;
+  left: 0; /* Align it to the left of the link */
+  right: 0; /* Stretch it to the right */
+  bottom: -20px; /* Adjusted to position just below the link without affecting size */
+  height: 4px; /* Set the thickness of the border */
+  background-color: white; /* Set the border color */
+  transform: scaleX(0); /* Initially hide the border */
+  transition: transform 0.3s ease; /* Smooth transition for the border */
+  border-radius: 20px;
 }
 
 .container2 a:hover::after,
 .container2 a:focus::after,
-.container2 a.active::after { 
-    transform: scaleX(1); 
+.container2 a.active::after {
+  transform: scaleX(1);
+}
+
+.nav-container {
+  position: relative; /* Allows absolute positioning of child elements */
+}
+
+.background-image {
+  position: absolute; /* Positioning the image absolutely */
+  top: 0; /* Align to the top */
+  left: 0; /* Align to the left */
+  width: 100%; /* Make it full width */
+  height: auto; /* Maintain aspect ratio */
+  z-index: -1; /* Send the image behind other content */
+}
+
+.container1,
+.container2,
+.container3,
+.bigPuzz,
+.puzzles {
+  position: relative; /* Ensure other content stays above the image */
+  z-index: 1; /* Bring this content in front of the background image */
+}
+
+.bigPuzz {
+  width: 280px;
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.BigPuzz {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 20px;
 }
 
 .puzzles {
-    width: 234px;
-    height: 402px;
-    border: 1px solid black; /* This should work to display the border */
-    box-sizing: border-box; /* Ensures padding and borders are included in width/height */
-    border-radius: 20px;
+  width: 300px;
+  height: 402px;
+  background-color: #b09bfa7a; /* This should work to display the border */
+  box-sizing: border-box; /* Ensures padding and borders are included in width/height */
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 20px;
+  padding: 10px;
+  /* Add drop shadow */
+  box-shadow: 0 4.7px 4.7px 4px rgba(188, 169, 254, 0.5); /* BCA9FE with blur and spread */
+}
+
+.puzzles2 {
+  width: 1100px;
+  height: 402px;
+  background-color: #b09bfa7a; /* This should work to display the border */
+  box-sizing: border-box; /* Ensures padding and borders are included in width/height */
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 20px;
+  padding: 10px;
+  align-items: center;
+  color: white;
+  /* Add drop shadow */
+  box-shadow: 0 4.7px 4.7px 4px rgba(188, 169, 254, 0.5); /* BCA9FE with blur and spread */
+}
+
+.play {
+  width: 200px;
+  height: 50px;
+  border-radius: 10px;
+  background: linear-gradient(
+    135deg,
+    #4e76d0,
+    #6d39cf
+  ); /* Linear gradient from left to right */
+  font-size: 24px;
+}
+
+.code {
+  font-family: "Inter", sans-serif;
+  font-weight: 600;
+  font-size: 100px;
+}
+
+.code2 {
+  font-family: "Inter", sans-serif;
+  font-size: 30px;
+  width: 900px;
+  display: flex;
+  align-items: center; /* Vertically centers the content */
+  justify-content: center; /* Horizontally centers the content */
+  text-align: center; /* Centers text in the flex item */
+}
+
+.puzzles3 {
+  width: 300px;
+  height: 402px;
+  background-color: #b09bfa7a; /* This should work to display the border */
+  box-sizing: border-box; /* Ensures padding and borders are included in width/height */
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 20px;
+  padding: 10px;
+  /* Add drop shadow */
+  box-shadow: 0 4.7px 4.7px 4px rgba(188, 169, 254, 0.5); /* BCA9FE with blur and spread */
+}
+
+.puzzles4 {
+  width: 1100px;
+  height: 402px;
+  background-color: #b09bfa7a; /* This should work to display the border */
+  box-sizing: border-box; /* Ensures padding and borders are included in width/height */
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 20px;
+  padding: 20px;
+  align-items: left;
+  color: white;
+  /* Add drop shadow */
+  box-shadow: 0 4.7px 4.7px 4px rgba(188, 169, 254, 0.5); /* BCA9FE with blur and spread */
+}
+
+.midPuzz {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.puz {
+  display: flex;
+  justify-content: space-around;
+}
+
+.Prepuz {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  color: white;
+}
+
+.PuzWeek {
+  display: flex;
+  justify-content: center;
+  color: white;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropbtn {
+  color: white; /* White text */
+  padding: 10px; /* Some padding */
+  font-size: 16px; /* Font size */
+  border: none; /* No border */
+  cursor: pointer; /* Pointer cursor on hover */
+  border-radius: 5px; /* Rounded corners */
+  display: flex; /* Use flexbox for better alignment */
+  align-items: center; /* Center items vertically */
+  gap: 20px;
+  justify-content: center;
+}
+
+.arrow {
+  margin-left: 5px; /* Spacing between text and arrow */
+}
+
+.dropdown-content {
+  display: none; /* Hidden by default */
+  position: absolute; /* Position it below the button */
+  background-color: #f9f9f9; /* White background */
+  min-width: 160px; /* Minimum width */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Drop shadow */
+  z-index: 1; /* On top */
+  border-radius: 5px; /* Rounded corners */
+}
+
+.dropdown-content p {
+  color: black; /* Black text */
+  padding: 12px 16px; /* Padding inside the dropdown */
+  text-decoration: none; /* No underline */
+  display: block; /* Block display */
+}
+
+.dropdown:hover .dropdown-content {
+  display: block; /* Show the dropdown on hover */
+}
+
+.drop {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.leaderboard {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.form-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000; /* Ensure it's above other elements */
+}
+
+.sign-in-form {
+  background-color: #B09BFA;
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  width: 600px; /* Adjust width as needed */
+  min-height: 300px; /* Minimum height for small forms */
+  position: relative; /* Needed for positioning close button */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: height 0.3s ease;
+  gap: 16px;
+  color: white;
+}
+
+.close-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 35px; /* Increase font size */
+  padding: 8px; /* Add padding for a larger clickable area */
+  position: absolute;
+  right: 15px; /* Adjust position */
+  top: 15px;
+  line-height: 1; /* Adjust line height to center the symbol */
+}
+
+.sign-in-form input[type="text"],
+.sign-in-form input[type="email"],
+.sign-in-form input[type="password"] {
+  width: 100%;
+  padding: 8px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  border: 1px solid #ccc; /* Default border color */
+  border-radius: 4px;
+}
+
+.sign-in-form input[type="text"]:focus,
+.sign-in-form input[type="email"]:focus,
+.sign-in-form input[type="password"]:focus {
+  border-color: #007bff; /* Border color on focus */
+  outline: none;
+}
+
+input[type="email"],
+input[type="password"] {
+  width: 100%; /* Make inputs full width */
+  padding: 12px; /* Increase padding for more space */
+  margin-bottom: 15px; /* Space below the input */
+  border: 1px solid #ccc; /* Light gray border */
+  border-radius: 4px; /* Rounded corners */
+  box-shadow: none; /* Remove default shadow */
+  transition: border-color 0.3s; /* Smooth transition on focus */
+}
+
+.signIn {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch; /* Change to stretch to make children full width */
+  gap: 20px; /* Adjust the gap for better spacing */
+}
+.submit {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%; /* Make submit button full width */
+  height: 50px; /* Increase height for a more comfortable button */
+  background: linear-gradient(
+    135deg,
+    #4e76d0,
+    #6d39cf
+  ); /* Linear gradient from left to right */
+  color: white; /* Text color */
+  font-size: 16px; /* Font size for better readability */
+  border-radius: 4px; /* Match with input borders */
+  cursor: pointer; /* Pointer cursor on hover */
+  transition: background-color 0.3s; /* Smooth transition for hover effect */
+}
+
+.form-buttons {
+  display: flex;
+  justify-content: space-between;
+  align-items: left;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.sign-in-form input {
+  color: black; /* Set the input text color to black */
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 100%;
+  font-size: 16px;
+}
+
+.submit:hover {
+  background-color: black;
+  color: white;
+}
+
+h2 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 25px;
 }
