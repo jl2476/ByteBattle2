@@ -10,7 +10,7 @@ const Layout = () => {
         <Link to="/puzzle">Puzzle</Link> | 
         <Link to="/code">Code</Link>
       </nav>
-      <Outlet /> {/* This renders the child routes */}
+      <Outlet /> 
     </div>
   );
 };
