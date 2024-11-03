@@ -9,10 +9,13 @@
 }
 
 .logo {
+  cursor: pointer; /* Ensures the cursor changes to a pointer */
+  pointer-events: auto; /* Ensure pointer events are enabled */
   margin-left: 60px;
   color: white;
   font-size: 35px;
 }
+
 
 .container2 {
   display: flex;

@@ -303,7 +303,9 @@ const Nav = () => {
       {/* Wrap everything in a div for relative positioning */}
       <img src="/image.png" className="background-image" alt="Background" />
       <div className="container1">
-        <p className="logo">ByteBattle</p>
+        <Link href="/" passHref>
+          <p className="logo">ByteBattle</p>
+        </Link>
         <div className="container2">
           <Link
             href="/"

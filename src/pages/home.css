@@ -143,6 +143,8 @@ h2 {
   margin-left: 60px;
   color: white;
   font-size: 35px;
+  cursor: pointer; /* Ensures the cursor changes to a pointer */
+  pointer-events: auto; /* Ensure pointer events are enabled */
 }
 
 .container3 {

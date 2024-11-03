@@ -316,7 +316,7 @@ const Code = () => {
         <img src="/image.png" className="background-image" alt="Background" />
         <div className="container1">
           <div className="navLeft">
-            <p className="logo">ByteBattle</p>
+          <Link href="/" className="logo">ByteBattle</Link>
             <div className="butn">
               <button className="prev">
                 <img src="/prevButton.svg"></img>
