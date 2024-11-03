@@ -290,29 +290,55 @@
 }
 
 .sign-in-form {
-  background-color: white;
-  padding: 20px;
-  border-radius: 8px;
+  background-color: #B09BFA;
+  padding: 40px;
+  border-radius: 20px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  width: 300px; /* Adjust as needed */
+  width: 600px; /* Adjust width as needed */
+  min-height: 300px; /* Minimum height for small forms */
   position: relative; /* Needed for positioning close button */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: height 0.3s ease;
+  gap: 16px;
+  color: white;
 }
 
 .close-button {
   background: none;
   border: none;
   cursor: pointer;
-  font-size: 18px;
+  font-size: 35px; /* Increase font size */
+  padding: 8px; /* Add padding for a larger clickable area */
   position: absolute;
-  right: 10px;
-  top: 10px;
+  right: 15px; /* Adjust position */
+  top: 15px;
+  line-height: 1; /* Adjust line height to center the symbol */
+}
+
+.sign-in-form input[type="text"],
+.sign-in-form input[type="email"],
+.sign-in-form input[type="password"] {
+  width: 100%;
+  padding: 8px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  border: 1px solid #ccc; /* Default border color */
+  border-radius: 4px;
+}
+
+.sign-in-form input[type="text"]:focus,
+.sign-in-form input[type="email"]:focus,
+.sign-in-form input[type="password"]:focus {
+  border-color: #007bff; /* Border color on focus */
+  outline: none;
 }
 
 input[type="email"],
 input[type="password"] {
   width: 100%; /* Make inputs full width */
-  padding: 10px; /* Add some padding */
-  margin-top: 5px; /* Space between label and input */
+  padding: 12px; /* Increase padding for more space */
   margin-bottom: 15px; /* Space below the input */
   border: 1px solid #ccc; /* Light gray border */
   border-radius: 4px; /* Rounded corners */
@@ -320,29 +346,47 @@ input[type="password"] {
   transition: border-color 0.3s; /* Smooth transition on focus */
 }
 
-input[type="email"]:focus,
-input[type="password"]:focus {
-  border-color: #007bff; /* Change border color on focus */
-  outline: none; /* Remove default outline */
+.signIn {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch; /* Change to stretch to make children full width */
+  gap: 20px; /* Adjust the gap for better spacing */
+}
+.submit {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%; /* Make submit button full width */
+  height: 50px; /* Increase height for a more comfortable button */
+  background: linear-gradient(
+    135deg,
+    #4e76d0,
+    #6d39cf
+  ); /* Linear gradient from left to right */
+  color: white; /* Text color */
+  font-size: 16px; /* Font size for better readability */
+  border-radius: 4px; /* Match with input borders */
+  cursor: pointer; /* Pointer cursor on hover */
+  transition: background-color 0.3s; /* Smooth transition for hover effect */
 }
 
-.signIn{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+.form-buttons {
+  display: flex;
+  justify-content: space-between;
+  align-items: left;
+  flex-direction: column;
+  gap: 16px;
 }
 
-.submit{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 40px;
-    border: 1px solid black;
+.submit:hover {
+  background-color: black;
+  color: white;
 }
 
-.submit:hover{
-    background-color: black;
-    color: white;
+h2 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 25px;
 }

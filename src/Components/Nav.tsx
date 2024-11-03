@@ -4,10 +4,17 @@ import Link from "next/link"; // Import Link from Next.js
 import "./index.css";
 
 const SignInForm = ({ onClose }) => {
-  const [isRegister, setIsRegister] = useState(false); // State to toggle between Sign In and Register
+  const [isRegister, setIsRegister] = useState(false);
+  const [isResetPassword, setIsResetPassword] = useState(false); // State for reset password mode
 
   const toggleForm = () => {
     setIsRegister(!isRegister);
+    setIsResetPassword(false); // Reset to avoid conflict with reset password mode
+  };
+
+  const handleResetPassword = () => {
+    setIsResetPassword(true);
+    setIsRegister(false); // Ensure we're not in register mode
   };
 
   return (
@@ -16,31 +23,71 @@ const SignInForm = ({ onClose }) => {
         &times; {/* Close symbol */}
       </button>
       <div className="signIn">
-        <h2>{isRegister ? 'Register' : 'Sign In'}</h2>
+        <h2>
+          {isRegister
+            ? "Register"
+            : isResetPassword
+            ? "Reset Password"
+            : "Sign In"}
+        </h2>
         <form>
-          <label htmlFor="email">Email:</label>
-          <input type="email" id="email" required />
-          
-          <label htmlFor="password">Password:</label>
-          <input type="password" id="password" required />
-          
           {isRegister && (
+            <div>
+              <label htmlFor="username">Username:</label>
+              <input type="text" id="username" required />
+            </div>
+          )}
+          {!isResetPassword && (
             <>
-              <label htmlFor="confirmPassword">Confirm Password:</label>
-              <input type="password" id="confirmPassword" required />
+              <div>
+                <label htmlFor="email">Email:</label>
+                <input type="email" id="email" required />
+              </div>
+              <div>
+                <label htmlFor="password">Password:</label>
+                <input type="password" id="password" required />
+              </div>
             </>
           )}
-          
-          <button type="submit" className="submit">{isRegister ? 'Register' : 'Submit'}</button>
+          {isResetPassword && (
+            <div>
+              <label htmlFor="email">Email:</label>
+              <input type="email" id="email" required />
+            </div>
+          )}
+
+          <div className="form-buttons">
+            {!isRegister && !isResetPassword && (
+              <p
+                onClick={() => {
+                  setIsResetPassword(true);
+                }}
+                style={{ cursor: "pointer", color: "#02246F" }}
+              >
+                Reset password
+              </p>
+            )}
+            <button type="submit" className="submit">
+              {isRegister ? "Register" : isResetPassword ? "Submit" : "Sign In"}
+            </button>
+
+            <p
+              onClick={() => {
+                setIsRegister(!isRegister);
+                setIsResetPassword(false);
+              }}
+              style={{ cursor: "pointer", color: "#02246F", marginTop: "16px" }}
+            >
+              {isRegister
+                ? "Already have an account? Sign In"
+                : "Don’t have an account? Register"}
+            </p>
+          </div>
         </form>
-        <p onClick={toggleForm} style={{ cursor: 'pointer', color: '#007bff' }}>
-          {isRegister ? 'Already have an account? Sign In' : 'Don’t have an account? Register'}
-        </p>
       </div>
     </div>
   );
 };
-
 
 const Nav = () => {
   // State to manage the active link and content
@@ -91,15 +138,12 @@ const Nav = () => {
           Sign in/Register
         </button>
       </div>
-
-
       {/* Render the SignInForm when showSignInForm is true */}
       {showSignInForm && (
         <div className="form-overlay">
           <SignInForm onClose={() => setShowSignInForm(false)} />
         </div>
       )}
-
       {/* Conditional rendering based on active link */}
       <div className="">
         {activeLink === "/" ? (
@@ -185,7 +229,7 @@ const Nav = () => {
               <div className="puzzles4">
                 <p>Leaderboard</p>
 
-                <div className="leaderboard"> 
+                <div className="leaderboard">
                   <p>Rank</p>
                   <p>Name</p>
                   <p>Speed</p>
@@ -196,7 +240,7 @@ const Nav = () => {
             <div className="midPuzz">
               <div className="puzzles3">
                 <div className="profile">
-                    <img src="/profile.svg"></img>
+                  <img src="/profile.svg"></img>
                 </div>
               </div>
               <div className="puzzles3"></div>
