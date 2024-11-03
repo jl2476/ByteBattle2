@@ -385,16 +385,9 @@ const Nav = () => {
                     <p>Sum it up</p>
                     <p>Easy</p>
                   </div>
-                  <div className="puz">
-                    <img src="/puzzle.svg" alt="Puzzle" />
-                    <p>Sum it up</p>
-                    <p>Easy</p>
-                  </div>
-                  <div className="puz">
-                    <img src="/puzzle.svg" alt="Puzzle" />
-                    <p>Sum it up</p>
-                    <p>Easy</p>
-                  </div>
+                  <Link href="/puzzle" onClick={() => handleLinkClick("/puzzle")}>
+                    <button className="all_puzzle">View all puzzles</button>
+                  </Link>
                 </div>
               </div>
 
