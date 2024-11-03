@@ -6,16 +6,20 @@ import {
 import React, { useState } from 'react';
 import { auth } from '../utils/firebase'; // Import the Firebase auth
 import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { FirebaseError } from 'firebase/app';
 
 function SignUp() {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   const db = getFirestore();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setIsLoading(true);
+    setErrorMessage('');
   
     try {
       // Create user with email and password
@@ -33,12 +37,32 @@ function SignUp() {
     } catch (error) {
       console.error('Registration error:', error);
  
-      if (error instanceof Error) {
-        setErrorMessage(error.message);
+      if (error instanceof FirebaseError) {
+        switch (error.code) {
+          case 'auth/weak-password':
+            setErrorMessage('Password should be at least 6 characters.');
+            break;
+          case 'auth/email-already-in-use':
+            setErrorMessage('This email is already registered. Please log in or use a different email.');
+            break;
+          case 'auth/invalid-email':
+            setErrorMessage('The email address is not valid.');
+            break;
+          default:
+            setErrorMessage('An error occurred during registration. Please try again.');
+        }
       } else {
         setErrorMessage('An unknown error occurred.');
       }
+    } 
+    finally {
+      setIsLoading(false); // Reset loading state
     }
+
+    //if (process.env.NODE_ENV === 'development') {
+    //  console.clear(); // Clears the error overlay in the console
+    //}
+
   };  
 
   return (
@@ -72,3 +96,5 @@ function SignUp() {
 }
 
 export default SignUp;
+
+
