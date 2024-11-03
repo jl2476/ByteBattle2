@@ -293,13 +293,29 @@ const Code = () => {
   const toggleDropdown = (index) => {
     setOpenDropdown(openDropdown === index ? null : index); 
   };
-  const [activeSection, setActiveSection] = useState("testCases");
+
 
   const handleClick = (section) => {
     setActiveSection(section);
   };
 
+  const [activeSection, setActiveSection] = useState('testCases');
   const [activeIndex, setActiveIndex] = useState(null);
+
+  const handleSectionClick = (section) => {
+    setActiveSection(section);
+    if (section === 'testCases') {
+      // Do not reset activeIndex here so the content persists
+    } else {
+      setActiveIndex(null); // Reset active index when switching to terminal
+    }
+  };
+
+  const handleTestCaseClick = (index) => {
+    setActiveIndex(activeIndex === index ? null : index); // Toggle active test case
+  };
+  
+ 
   const testCaseContent = [
     "Content for Test Case 1: Description or example here.",
     "Content for Test Case 2: Additional details here.",
@@ -412,51 +428,51 @@ const Code = () => {
         <div className="smallPuzz">
           <div className="puzzles4"></div>
           <div className="puzzles5">
-          
-            <div className="navigation">
-              <button onClick={() => handleClick("testCases")}>
-                Test Cases
-              </button>
-              <button onClick={() => handleClick("terminal")}>Terminal</button>
-            </div>
+      {/* Navigation Section */}
+      <div className="navigation">
+        <button onClick={() => handleSectionClick('testCases')}>Test Cases</button>
+        <button onClick={() => handleSectionClick('terminal')}>Terminal</button>
+      </div>
 
-        
-            {activeSection === "testCases" && (
-              <div className="test">
-              
-                {[
-                  "Test Case 1",
-                  "Test Case 2",
-                  "Test Case 3",
-                  "Test Case 4",
-                ].map((caseName, index) => (
-                  <div
-                    key={index}
-                    className="test-case-container"
-                    onClick={() => handleClick(index)}
-                  >
-                    <p className={`test-case`}>{caseName}</p>
-                  </div>
-                ))}
-                
-                {activeIndex !== null && (
-                  <div className="test-case-content">
-                    <p>{testCaseContent[activeIndex]}</p>
-                  </div>
-                )}
-              </div>
-            )}
-
-            {activeSection === "terminal" && (
-              <div className="terminal-section">
-                <p>Terminal Output</p>
-                
-                <div className="terminal-content">
-                  <p>Output will be displayed here...</p>
-                </div>
-              </div>
+      {/* Conditional Rendering Based on Active Section */}
+      {activeSection === 'testCases' && (
+        <div className="test-cases-section">
+          <p className="test-cases-title">Test Cases</p>
+          <div className="test-case-list">
+            {["Test Case 1", "Test Case 2", "Test Case 3", "Test Case 4"].map(
+              (caseName, index) => (
+                <span
+                  key={index}
+                  className={`test-case ${activeIndex === index ? 'active' : ''}`}
+                  onClick={() => handleTestCaseClick(index)}
+                >
+                  {caseName}
+                </span>
+              )
             )}
           </div>
+
+          {/* Displaying Content of Active Test Case */}
+          {activeIndex !== null && (
+            <>
+              <hr className="separator-line" />
+              <div className="test-case-content">
+                <p>{testCaseContent[activeIndex]}</p>
+              </div>
+            </>
+          )}
+        </div>
+      )}
+
+      {activeSection === 'terminal' && (
+        <div className="terminal-section">
+          <p>Terminal Output</p>
+          <div className="terminal-content">
+            <p>Output will be displayed here...</p>
+          </div>
+        </div>
+      )}
+    </div>
         </div>
       </div>
     </>
