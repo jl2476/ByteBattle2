@@ -1,6 +1,6 @@
 import "./home.css";
 import React, { useEffect, useState } from "react";
-import { auth } from "../utils/firebase"; // Make sure this path is correct
+import { auth } from "../utils/firebase"; 
 import {
   signInWithEmailAndPassword,
   sendPasswordResetEmail,
@@ -9,13 +9,13 @@ import {
   signOut,
 } from "firebase/auth";
 import { FirebaseError } from "firebase/app";
-import Link from "next/link"; // Import Link from Next.js
+import Link from "next/link"; 
 import { User } from "firebase/auth";
 import { getFirestore, doc, setDoc } from "firebase/firestore";
 
 const SignInForm = ({ onClose }) => {
   const [isRegister, setIsRegister] = useState(false);
-  const [isResetPassword, setIsResetPassword] = useState(false); // State for reset password mode
+  const [isResetPassword, setIsResetPassword] = useState(false); 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
@@ -26,14 +26,14 @@ const SignInForm = ({ onClose }) => {
 
   const handleRegister = async (e: React.FormEvent<HTMLFormElement>) => {
     setIsRegister(!isRegister);
-    setIsResetPassword(false); // Reset to avoid conflict with reset password mode
+    setIsResetPassword(false); 
 
     e.preventDefault();
     setIsLoading(true);
     setErrorMessage("");
 
     try {
-      // Create user with email and password
+     
       const userCredential = await createUserWithEmailAndPassword(
         auth,
         email,
@@ -41,14 +41,14 @@ const SignInForm = ({ onClose }) => {
       );
       const user = userCredential.user;
 
-      // Store additional user info in Firestore
+    
       await setDoc(doc(db, "users", user.uid), {
         username: username,
         email: email,
       });
 
       console.log("User registered successfully:", username, email);
-      // Redirect or show success message
+     
     } catch (error) {
       console.error("Registration error:", error);
 
@@ -74,7 +74,7 @@ const SignInForm = ({ onClose }) => {
         setErrorMessage("An unknown error occurred.");
       }
     } finally {
-      setIsLoading(false); // Reset loading state
+      setIsLoading(false); 
     }
   };
 
@@ -83,7 +83,7 @@ const SignInForm = ({ onClose }) => {
     setIsLoading(true);
 
     try {
-      // Sign in using email and password
+      
       const userCredential = await signInWithEmailAndPassword(
         auth,
         email,
@@ -143,7 +143,7 @@ const SignInForm = ({ onClose }) => {
 
   const handleResetPassword = async (e: React.FormEvent<HTMLFormElement>) => {
     setIsResetPassword(true);
-    setIsRegister(false); // Ensure we're not in register mode
+    setIsRegister(false); 
 
     e.preventDefault();
     setIsLoading(true);
@@ -175,7 +175,7 @@ const SignInForm = ({ onClose }) => {
   return (
     <div className="sign-in-form">
       <button className="close-button" onClick={onClose} aria-label="Close">
-        &times; {/* Close symbol */}
+        &times;
       </button>
       <div className="signIn">
         <h2>
@@ -267,32 +267,31 @@ const Code = () => {
   const [activeLink, setActiveLink] = useState("/");
   const [openDropdown, setOpenDropdown] = useState(null);
   const [showSignInForm, setShowSignInForm] = useState(false);
-  const [user, setUser] = useState<User | null>(null); // Explicitly type the user state
+  const [user, setUser] = useState<User | null>(null); 
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
     });
-    return () => unsubscribe(); // Clean up listener on component unmount
+    return () => unsubscribe(); /
   }, []);
 
   const handleSignOut = async () => {
     try {
       await signOut(auth);
-      setUser(null); // Clear user from state after sign-out
+      setUser(null); 
     } catch (error) {
       console.error("Error signing out:", error);
     }
   };
 
-  // Function to handle link click
+
   const handleLinkClick = (path) => {
     setActiveLink(path);
   };
 
-  // Function to toggle dropdown
   const toggleDropdown = (index) => {
-    setOpenDropdown(openDropdown === index ? null : index); // Toggle the dropdown
+    setOpenDropdown(openDropdown === index ? null : index); 
   };
   const [activeSection, setActiveSection] = useState("testCases");
 
@@ -413,7 +412,7 @@ const Code = () => {
         <div className="smallPuzz">
           <div className="puzzles4"></div>
           <div className="puzzles5">
-            {/* Navigation Section */}
+          
             <div className="navigation">
               <button onClick={() => handleClick("testCases")}>
                 Test Cases
@@ -421,7 +420,7 @@ const Code = () => {
               <button onClick={() => handleClick("terminal")}>Terminal</button>
             </div>
 
-            {/* Conditional Rendering Based on Active Section */}
+        
             {activeSection === "testCases" && (
               <div className="test">
               
@@ -439,7 +438,7 @@ const Code = () => {
                     <p className={`test-case`}>{caseName}</p>
                   </div>
                 ))}
-                {/* Displaying Content of Active Test Case */}
+                
                 {activeIndex !== null && (
                   <div className="test-case-content">
                     <p>{testCaseContent[activeIndex]}</p>
@@ -451,7 +450,7 @@ const Code = () => {
             {activeSection === "terminal" && (
               <div className="terminal-section">
                 <p>Terminal Output</p>
-                {/* Replace this with your terminal content */}
+                
                 <div className="terminal-content">
                   <p>Output will be displayed here...</p>
                 </div>
