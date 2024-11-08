@@ -6,30 +6,30 @@ import "./editor.css";
 
 import { makeStyles, createStyles, Theme } from "@material-ui/core";
 import { ThemeProvider } from "@material-ui/styles";
-import { darkTheme } from "../components/MaterialTheming";
+import { darkTheme } from "../../components/MaterialTheming";
 
 import EditorBody from "./components/EditorBody";
 
-import firebase from "../components/firebase.js";
+import firebase from "../../components/firebase.js";
 
-const useStyles = makeStyles((theme: Theme) =>
+const useStyles = makeStyles((theme) =>
   createStyles({
     editorPage: {
       height: "100%",
       width: "100%",
       display: "grid",
       gridGap: "14px",
-      gridTemplateRows: "auto 1fr",
+      gridTemplateRows: "auto 1fr"
     },
     brandingLogo: {
-      cursor: "pointer",
+      cursor: "pointer"
     },
     header: {
       display: "grid",
       gridTemplateColumns: "repeat(3,1fr)",
       "& > *": {
-        margin: "auto 0",
-      },
+        margin: "auto 0"
+      }
     },
     codeTitle: {
       color: "#2196F3",
@@ -38,15 +38,15 @@ const useStyles = makeStyles((theme: Theme) =>
       outline: "none",
       textAlign: "center",
       height: "100%",
-      width: "100%",
+      width: "100%"
     },
     body: {
       height: "100%",
       width: "100%",
       display: "grid",
-      gridTemplateRows: "70% 30%",
-    },
-  }),
+      gridTemplateRows: "70% 30%"
+    }
+  })
 );
 
 function Editor(props) {
